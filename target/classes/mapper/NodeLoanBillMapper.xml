@@ -1,0 +1,850 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ybz.dao.NodeLoanBillMapper" >
+  <resultMap id="BaseResultMap" type="com.ybz.entity.NodeLoanBill" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="pk" property="pk" jdbcType="VARCHAR" />
+    <result column="user_id" property="userId" jdbcType="VARCHAR" />
+    <result column="money" property="money" jdbcType="DOUBLE" />
+    <result column="hkye" property="hkye" jdbcType="DOUBLE" />
+    <result column="hkzt" property="hkzt" jdbcType="VARCHAR" />
+    <result column="szxm" property="szxm" jdbcType="VARCHAR" />
+    <result column="project" property="project" jdbcType="VARCHAR" />
+    <result column="bankAccountKey" property="bankaccountkey" jdbcType="VARCHAR" />
+    <result column="bankAccount" property="bankaccount" jdbcType="VARCHAR" />
+    <result column="dealdate" property="dealdate" jdbcType="DATE" />
+    <result column="billstatus" property="billstatus" jdbcType="INTEGER" />
+    <result column="pk_bill" property="pkBill" jdbcType="VARCHAR" />
+    <result column="defitem1" property="defitem1" jdbcType="VARCHAR" />
+    <result column="defitem2" property="defitem2" jdbcType="VARCHAR" />
+    <result column="defitem3" property="defitem3" jdbcType="VARCHAR" />
+    <result column="defitem4" property="defitem4" jdbcType="VARCHAR" />
+    <result column="defitem5" property="defitem5" jdbcType="VARCHAR" />
+    <result column="defitem6" property="defitem6" jdbcType="VARCHAR" />
+    <result column="defitem7" property="defitem7" jdbcType="VARCHAR" />
+    <result column="defitem8" property="defitem8" jdbcType="VARCHAR" />
+    <result column="defitem9" property="defitem9" jdbcType="VARCHAR" />
+    <result column="defitem10" property="defitem10" jdbcType="VARCHAR" />
+    <result column="defitem11" property="defitem11" jdbcType="VARCHAR" />
+    <result column="defitem12" property="defitem12" jdbcType="VARCHAR" />
+    <result column="defitem13" property="defitem13" jdbcType="VARCHAR" />
+    <result column="defitem14" property="defitem14" jdbcType="VARCHAR" />
+    <result column="defitem15" property="defitem15" jdbcType="VARCHAR" />
+    <result column="defitem16" property="defitem16" jdbcType="VARCHAR" />
+    <result column="defitem17" property="defitem17" jdbcType="VARCHAR" />
+    <result column="defitem18" property="defitem18" jdbcType="VARCHAR" />
+    <result column="defitem19" property="defitem19" jdbcType="VARCHAR" />
+    <result column="defitem20" property="defitem20" jdbcType="VARCHAR" />
+    <result column="ts" property="ts" jdbcType="TIMESTAMP" />
+    <result column="valid" property="valid" jdbcType="BIT" />
+    <result column="djlxpk" property="djlxpk" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.ybz.entity.NodeLoanBillWithBLOBs" extends="BaseResultMap" >
+    <result column="descript" property="descript" jdbcType="LONGVARCHAR" />
+    <result column="billType" property="billtype" jdbcType="LONGVARCHAR" />
+    <result column="errorMsg" property="errormsg" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, pk, user_id, money, hkye, hkzt, szxm, project, bankAccountKey, bankAccount, dealdate, 
+    billstatus, pk_bill, defitem1, defitem2, defitem3, defitem4, defitem5, defitem6, 
+    defitem7, defitem8, defitem9, defitem10, defitem11, defitem12, defitem13, defitem14, 
+    defitem15, defitem16, defitem17, defitem18, defitem19, defitem20, ts, valid, djlxpk
+  </sql>
+  <sql id="Blob_Column_List" >
+    descript, billType, errorMsg
+  </sql>
+  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.ybz.entity.NodeLoanBillExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from node_loanbill
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.ybz.entity.NodeLoanBillExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from node_loanbill
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from node_loanbill
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from node_loanbill
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.ybz.entity.NodeLoanBillExample" >
+    delete from node_loanbill
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.ybz.entity.NodeLoanBillWithBLOBs" >
+    insert into node_loanbill (id, pk, user_id, 
+      money, hkye, hkzt, szxm, 
+      project, bankAccountKey, bankAccount, 
+      dealdate, billstatus, pk_bill, 
+      defitem1, defitem2, defitem3, 
+      defitem4, defitem5, defitem6, 
+      defitem7, defitem8, defitem9, 
+      defitem10, defitem11, defitem12, 
+      defitem13, defitem14, defitem15, 
+      defitem16, defitem17, defitem18, 
+      defitem19, defitem20, ts, 
+      valid, djlxpk, descript, 
+      billType, errorMsg)
+    values (#{id,jdbcType=INTEGER}, #{pk,jdbcType=VARCHAR}, #{userId,jdbcType=VARCHAR}, 
+      #{money,jdbcType=DOUBLE}, #{hkye,jdbcType=DOUBLE}, #{hkzt,jdbcType=VARCHAR}, #{szxm,jdbcType=VARCHAR}, 
+      #{project,jdbcType=VARCHAR}, #{bankaccountkey,jdbcType=VARCHAR}, #{bankaccount,jdbcType=VARCHAR}, 
+      #{dealdate,jdbcType=DATE}, #{billstatus,jdbcType=INTEGER}, #{pkBill,jdbcType=VARCHAR}, 
+      #{defitem1,jdbcType=VARCHAR}, #{defitem2,jdbcType=VARCHAR}, #{defitem3,jdbcType=VARCHAR}, 
+      #{defitem4,jdbcType=VARCHAR}, #{defitem5,jdbcType=VARCHAR}, #{defitem6,jdbcType=VARCHAR}, 
+      #{defitem7,jdbcType=VARCHAR}, #{defitem8,jdbcType=VARCHAR}, #{defitem9,jdbcType=VARCHAR}, 
+      #{defitem10,jdbcType=VARCHAR}, #{defitem11,jdbcType=VARCHAR}, #{defitem12,jdbcType=VARCHAR}, 
+      #{defitem13,jdbcType=VARCHAR}, #{defitem14,jdbcType=VARCHAR}, #{defitem15,jdbcType=VARCHAR}, 
+      #{defitem16,jdbcType=VARCHAR}, #{defitem17,jdbcType=VARCHAR}, #{defitem18,jdbcType=VARCHAR}, 
+      #{defitem19,jdbcType=VARCHAR}, #{defitem20,jdbcType=VARCHAR}, #{ts,jdbcType=TIMESTAMP}, 
+      #{valid,jdbcType=BIT}, #{djlxpk,jdbcType=VARCHAR}, #{descript,jdbcType=LONGVARCHAR}, 
+      #{billtype,jdbcType=LONGVARCHAR}, #{errormsg,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ybz.entity.NodeLoanBillWithBLOBs" >
+    insert into node_loanbill
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="pk != null" >
+        pk,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="money != null" >
+        money,
+      </if>
+      <if test="hkye != null" >
+        hkye,
+      </if>
+      <if test="hkzt != null" >
+        hkzt,
+      </if>
+      <if test="szxm != null" >
+        szxm,
+      </if>
+      <if test="project != null" >
+        project,
+      </if>
+      <if test="bankaccountkey != null" >
+        bankAccountKey,
+      </if>
+      <if test="bankaccount != null" >
+        bankAccount,
+      </if>
+      <if test="dealdate != null" >
+        dealdate,
+      </if>
+      <if test="billstatus != null" >
+        billstatus,
+      </if>
+      <if test="pkBill != null" >
+        pk_bill,
+      </if>
+      <if test="defitem1 != null" >
+        defitem1,
+      </if>
+      <if test="defitem2 != null" >
+        defitem2,
+      </if>
+      <if test="defitem3 != null" >
+        defitem3,
+      </if>
+      <if test="defitem4 != null" >
+        defitem4,
+      </if>
+      <if test="defitem5 != null" >
+        defitem5,
+      </if>
+      <if test="defitem6 != null" >
+        defitem6,
+      </if>
+      <if test="defitem7 != null" >
+        defitem7,
+      </if>
+      <if test="defitem8 != null" >
+        defitem8,
+      </if>
+      <if test="defitem9 != null" >
+        defitem9,
+      </if>
+      <if test="defitem10 != null" >
+        defitem10,
+      </if>
+      <if test="defitem11 != null" >
+        defitem11,
+      </if>
+      <if test="defitem12 != null" >
+        defitem12,
+      </if>
+      <if test="defitem13 != null" >
+        defitem13,
+      </if>
+      <if test="defitem14 != null" >
+        defitem14,
+      </if>
+      <if test="defitem15 != null" >
+        defitem15,
+      </if>
+      <if test="defitem16 != null" >
+        defitem16,
+      </if>
+      <if test="defitem17 != null" >
+        defitem17,
+      </if>
+      <if test="defitem18 != null" >
+        defitem18,
+      </if>
+      <if test="defitem19 != null" >
+        defitem19,
+      </if>
+      <if test="defitem20 != null" >
+        defitem20,
+      </if>
+      <if test="ts != null" >
+        ts,
+      </if>
+      <if test="valid != null" >
+        valid,
+      </if>
+      <if test="djlxpk != null" >
+        djlxpk,
+      </if>
+      <if test="descript != null" >
+        descript,
+      </if>
+      <if test="billtype != null" >
+        billType,
+      </if>
+      <if test="errormsg != null" >
+        errorMsg,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="pk != null" >
+        #{pk,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="money != null" >
+        #{money,jdbcType=DOUBLE},
+      </if>
+      <if test="hkye != null" >
+        #{hkye,jdbcType=DOUBLE},
+      </if>
+      <if test="hkzt != null" >
+        #{hkzt,jdbcType=VARCHAR},
+      </if>
+      <if test="szxm != null" >
+        #{szxm,jdbcType=VARCHAR},
+      </if>
+      <if test="project != null" >
+        #{project,jdbcType=VARCHAR},
+      </if>
+      <if test="bankaccountkey != null" >
+        #{bankaccountkey,jdbcType=VARCHAR},
+      </if>
+      <if test="bankaccount != null" >
+        #{bankaccount,jdbcType=VARCHAR},
+      </if>
+      <if test="dealdate != null" >
+        #{dealdate,jdbcType=DATE},
+      </if>
+      <if test="billstatus != null" >
+        #{billstatus,jdbcType=INTEGER},
+      </if>
+      <if test="pkBill != null" >
+        #{pkBill,jdbcType=VARCHAR},
+      </if>
+      <if test="defitem1 != null" >
+        #{defitem1,jdbcType=VARCHAR},
+      </if>
+      <if test="defitem2 != null" >
+        #{defitem2,jdbcType=VARCHAR},
+      </if>
+      <if test="defitem3 != null" >
+        #{defitem3,jdbcType=VARCHAR},
+      </if>
+      <if test="defitem4 != null" >
+        #{defitem4,jdbcType=VARCHAR},
+      </if>
+      <if test="defitem5 != null" >
+        #{defitem5,jdbcType=VARCHAR},
+      </if>
+      <if test="defitem6 != null" >
+        #{defitem6,jdbcType=VARCHAR},
+      </if>
+      <if test="defitem7 != null" >
+        #{defitem7,jdbcType=VARCHAR},
+      </if>
+      <if test="defitem8 != null" >
+        #{defitem8,jdbcType=VARCHAR},
+      </if>
+      <if test="defitem9 != null" >
+        #{defitem9,jdbcType=VARCHAR},
+      </if>
+      <if test="defitem10 != null" >
+        #{defitem10,jdbcType=VARCHAR},
+      </if>
+      <if test="defitem11 != null" >
+        #{defitem11,jdbcType=VARCHAR},
+      </if>
+      <if test="defitem12 != null" >
+        #{defitem12,jdbcType=VARCHAR},
+      </if>
+      <if test="defitem13 != null" >
+        #{defitem13,jdbcType=VARCHAR},
+      </if>
+      <if test="defitem14 != null" >
+        #{defitem14,jdbcType=VARCHAR},
+      </if>
+      <if test="defitem15 != null" >
+        #{defitem15,jdbcType=VARCHAR},
+      </if>
+      <if test="defitem16 != null" >
+        #{defitem16,jdbcType=VARCHAR},
+      </if>
+      <if test="defitem17 != null" >
+        #{defitem17,jdbcType=VARCHAR},
+      </if>
+      <if test="defitem18 != null" >
+        #{defitem18,jdbcType=VARCHAR},
+      </if>
+      <if test="defitem19 != null" >
+        #{defitem19,jdbcType=VARCHAR},
+      </if>
+      <if test="defitem20 != null" >
+        #{defitem20,jdbcType=VARCHAR},
+      </if>
+      <if test="ts != null" >
+        #{ts,jdbcType=TIMESTAMP},
+      </if>
+      <if test="valid != null" >
+        #{valid,jdbcType=BIT},
+      </if>
+      <if test="djlxpk != null" >
+        #{djlxpk,jdbcType=VARCHAR},
+      </if>
+      <if test="descript != null" >
+        #{descript,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="billtype != null" >
+        #{billtype,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="errormsg != null" >
+        #{errormsg,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.ybz.entity.NodeLoanBillExample" resultType="java.lang.Integer" >
+    select count(*) from node_loanbill
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update node_loanbill
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.pk != null" >
+        pk = #{record.pk,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userId != null" >
+        user_id = #{record.userId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.money != null" >
+        money = #{record.money,jdbcType=DOUBLE},
+      </if>
+      <if test="record.hkye != null" >
+        hkye = #{record.hkye,jdbcType=DOUBLE},
+      </if>
+      <if test="record.hkzt != null" >
+        hkzt = #{record.hkzt,jdbcType=VARCHAR},
+      </if>
+      <if test="record.szxm != null" >
+        szxm = #{record.szxm,jdbcType=VARCHAR},
+      </if>
+      <if test="record.project != null" >
+        project = #{record.project,jdbcType=VARCHAR},
+      </if>
+      <if test="record.bankaccountkey != null" >
+        bankAccountKey = #{record.bankaccountkey,jdbcType=VARCHAR},
+      </if>
+      <if test="record.bankaccount != null" >
+        bankAccount = #{record.bankaccount,jdbcType=VARCHAR},
+      </if>
+      <if test="record.dealdate != null" >
+        dealdate = #{record.dealdate,jdbcType=DATE},
+      </if>
+      <if test="record.billstatus != null" >
+        billstatus = #{record.billstatus,jdbcType=INTEGER},
+      </if>
+      <if test="record.pkBill != null" >
+        pk_bill = #{record.pkBill,jdbcType=VARCHAR},
+      </if>
+      <if test="record.defitem1 != null" >
+        defitem1 = #{record.defitem1,jdbcType=VARCHAR},
+      </if>
+      <if test="record.defitem2 != null" >
+        defitem2 = #{record.defitem2,jdbcType=VARCHAR},
+      </if>
+      <if test="record.defitem3 != null" >
+        defitem3 = #{record.defitem3,jdbcType=VARCHAR},
+      </if>
+      <if test="record.defitem4 != null" >
+        defitem4 = #{record.defitem4,jdbcType=VARCHAR},
+      </if>
+      <if test="record.defitem5 != null" >
+        defitem5 = #{record.defitem5,jdbcType=VARCHAR},
+      </if>
+      <if test="record.defitem6 != null" >
+        defitem6 = #{record.defitem6,jdbcType=VARCHAR},
+      </if>
+      <if test="record.defitem7 != null" >
+        defitem7 = #{record.defitem7,jdbcType=VARCHAR},
+      </if>
+      <if test="record.defitem8 != null" >
+        defitem8 = #{record.defitem8,jdbcType=VARCHAR},
+      </if>
+      <if test="record.defitem9 != null" >
+        defitem9 = #{record.defitem9,jdbcType=VARCHAR},
+      </if>
+      <if test="record.defitem10 != null" >
+        defitem10 = #{record.defitem10,jdbcType=VARCHAR},
+      </if>
+      <if test="record.defitem11 != null" >
+        defitem11 = #{record.defitem11,jdbcType=VARCHAR},
+      </if>
+      <if test="record.defitem12 != null" >
+        defitem12 = #{record.defitem12,jdbcType=VARCHAR},
+      </if>
+      <if test="record.defitem13 != null" >
+        defitem13 = #{record.defitem13,jdbcType=VARCHAR},
+      </if>
+      <if test="record.defitem14 != null" >
+        defitem14 = #{record.defitem14,jdbcType=VARCHAR},
+      </if>
+      <if test="record.defitem15 != null" >
+        defitem15 = #{record.defitem15,jdbcType=VARCHAR},
+      </if>
+      <if test="record.defitem16 != null" >
+        defitem16 = #{record.defitem16,jdbcType=VARCHAR},
+      </if>
+      <if test="record.defitem17 != null" >
+        defitem17 = #{record.defitem17,jdbcType=VARCHAR},
+      </if>
+      <if test="record.defitem18 != null" >
+        defitem18 = #{record.defitem18,jdbcType=VARCHAR},
+      </if>
+      <if test="record.defitem19 != null" >
+        defitem19 = #{record.defitem19,jdbcType=VARCHAR},
+      </if>
+      <if test="record.defitem20 != null" >
+        defitem20 = #{record.defitem20,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ts != null" >
+        ts = #{record.ts,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.valid != null" >
+        valid = #{record.valid,jdbcType=BIT},
+      </if>
+      <if test="record.djlxpk != null" >
+        djlxpk = #{record.djlxpk,jdbcType=VARCHAR},
+      </if>
+      <if test="record.descript != null" >
+        descript = #{record.descript,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.billtype != null" >
+        billType = #{record.billtype,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.errormsg != null" >
+        errorMsg = #{record.errormsg,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map" >
+    update node_loanbill
+    set id = #{record.id,jdbcType=INTEGER},
+      pk = #{record.pk,jdbcType=VARCHAR},
+      user_id = #{record.userId,jdbcType=VARCHAR},
+      money = #{record.money,jdbcType=DOUBLE},
+      hkye = #{record.hkye,jdbcType=DOUBLE},
+      hkzt = #{record.hkzt,jdbcType=VARCHAR},
+      szxm = #{record.szxm,jdbcType=VARCHAR},
+      project = #{record.project,jdbcType=VARCHAR},
+      bankAccountKey = #{record.bankaccountkey,jdbcType=VARCHAR},
+      bankAccount = #{record.bankaccount,jdbcType=VARCHAR},
+      dealdate = #{record.dealdate,jdbcType=DATE},
+      billstatus = #{record.billstatus,jdbcType=INTEGER},
+      pk_bill = #{record.pkBill,jdbcType=VARCHAR},
+      defitem1 = #{record.defitem1,jdbcType=VARCHAR},
+      defitem2 = #{record.defitem2,jdbcType=VARCHAR},
+      defitem3 = #{record.defitem3,jdbcType=VARCHAR},
+      defitem4 = #{record.defitem4,jdbcType=VARCHAR},
+      defitem5 = #{record.defitem5,jdbcType=VARCHAR},
+      defitem6 = #{record.defitem6,jdbcType=VARCHAR},
+      defitem7 = #{record.defitem7,jdbcType=VARCHAR},
+      defitem8 = #{record.defitem8,jdbcType=VARCHAR},
+      defitem9 = #{record.defitem9,jdbcType=VARCHAR},
+      defitem10 = #{record.defitem10,jdbcType=VARCHAR},
+      defitem11 = #{record.defitem11,jdbcType=VARCHAR},
+      defitem12 = #{record.defitem12,jdbcType=VARCHAR},
+      defitem13 = #{record.defitem13,jdbcType=VARCHAR},
+      defitem14 = #{record.defitem14,jdbcType=VARCHAR},
+      defitem15 = #{record.defitem15,jdbcType=VARCHAR},
+      defitem16 = #{record.defitem16,jdbcType=VARCHAR},
+      defitem17 = #{record.defitem17,jdbcType=VARCHAR},
+      defitem18 = #{record.defitem18,jdbcType=VARCHAR},
+      defitem19 = #{record.defitem19,jdbcType=VARCHAR},
+      defitem20 = #{record.defitem20,jdbcType=VARCHAR},
+      ts = #{record.ts,jdbcType=TIMESTAMP},
+      valid = #{record.valid,jdbcType=BIT},
+      djlxpk = #{record.djlxpk,jdbcType=VARCHAR},
+      descript = #{record.descript,jdbcType=LONGVARCHAR},
+      billType = #{record.billtype,jdbcType=LONGVARCHAR},
+      errorMsg = #{record.errormsg,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update node_loanbill
+    set id = #{record.id,jdbcType=INTEGER},
+      pk = #{record.pk,jdbcType=VARCHAR},
+      user_id = #{record.userId,jdbcType=VARCHAR},
+      money = #{record.money,jdbcType=DOUBLE},
+      hkye = #{record.hkye,jdbcType=DOUBLE},
+      hkzt = #{record.hkzt,jdbcType=VARCHAR},
+      szxm = #{record.szxm,jdbcType=VARCHAR},
+      project = #{record.project,jdbcType=VARCHAR},
+      bankAccountKey = #{record.bankaccountkey,jdbcType=VARCHAR},
+      bankAccount = #{record.bankaccount,jdbcType=VARCHAR},
+      dealdate = #{record.dealdate,jdbcType=DATE},
+      billstatus = #{record.billstatus,jdbcType=INTEGER},
+      pk_bill = #{record.pkBill,jdbcType=VARCHAR},
+      defitem1 = #{record.defitem1,jdbcType=VARCHAR},
+      defitem2 = #{record.defitem2,jdbcType=VARCHAR},
+      defitem3 = #{record.defitem3,jdbcType=VARCHAR},
+      defitem4 = #{record.defitem4,jdbcType=VARCHAR},
+      defitem5 = #{record.defitem5,jdbcType=VARCHAR},
+      defitem6 = #{record.defitem6,jdbcType=VARCHAR},
+      defitem7 = #{record.defitem7,jdbcType=VARCHAR},
+      defitem8 = #{record.defitem8,jdbcType=VARCHAR},
+      defitem9 = #{record.defitem9,jdbcType=VARCHAR},
+      defitem10 = #{record.defitem10,jdbcType=VARCHAR},
+      defitem11 = #{record.defitem11,jdbcType=VARCHAR},
+      defitem12 = #{record.defitem12,jdbcType=VARCHAR},
+      defitem13 = #{record.defitem13,jdbcType=VARCHAR},
+      defitem14 = #{record.defitem14,jdbcType=VARCHAR},
+      defitem15 = #{record.defitem15,jdbcType=VARCHAR},
+      defitem16 = #{record.defitem16,jdbcType=VARCHAR},
+      defitem17 = #{record.defitem17,jdbcType=VARCHAR},
+      defitem18 = #{record.defitem18,jdbcType=VARCHAR},
+      defitem19 = #{record.defitem19,jdbcType=VARCHAR},
+      defitem20 = #{record.defitem20,jdbcType=VARCHAR},
+      ts = #{record.ts,jdbcType=TIMESTAMP},
+      valid = #{record.valid,jdbcType=BIT},
+      djlxpk = #{record.djlxpk,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ybz.entity.NodeLoanBillWithBLOBs" >
+    update node_loanbill
+    <set >
+      <if test="pk != null" >
+        pk = #{pk,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="money != null" >
+        money = #{money,jdbcType=DOUBLE},
+      </if>
+      <if test="hkye != null" >
+        hkye = #{hkye,jdbcType=DOUBLE},
+      </if>
+      <if test="hkzt != null" >
+        hkzt = #{hkzt,jdbcType=VARCHAR},
+      </if>
+      <if test="szxm != null" >
+        szxm = #{szxm,jdbcType=VARCHAR},
+      </if>
+      <if test="project != null" >
+        project = #{project,jdbcType=VARCHAR},
+      </if>
+      <if test="bankaccountkey != null" >
+        bankAccountKey = #{bankaccountkey,jdbcType=VARCHAR},
+      </if>
+      <if test="bankaccount != null" >
+        bankAccount = #{bankaccount,jdbcType=VARCHAR},
+      </if>
+      <if test="dealdate != null" >
+        dealdate = #{dealdate,jdbcType=DATE},
+      </if>
+      <if test="billstatus != null" >
+        billstatus = #{billstatus,jdbcType=INTEGER},
+      </if>
+      <if test="pkBill != null" >
+        pk_bill = #{pkBill,jdbcType=VARCHAR},
+      </if>
+      <if test="defitem1 != null" >
+        defitem1 = #{defitem1,jdbcType=VARCHAR},
+      </if>
+      <if test="defitem2 != null" >
+        defitem2 = #{defitem2,jdbcType=VARCHAR},
+      </if>
+      <if test="defitem3 != null" >
+        defitem3 = #{defitem3,jdbcType=VARCHAR},
+      </if>
+      <if test="defitem4 != null" >
+        defitem4 = #{defitem4,jdbcType=VARCHAR},
+      </if>
+      <if test="defitem5 != null" >
+        defitem5 = #{defitem5,jdbcType=VARCHAR},
+      </if>
+      <if test="defitem6 != null" >
+        defitem6 = #{defitem6,jdbcType=VARCHAR},
+      </if>
+      <if test="defitem7 != null" >
+        defitem7 = #{defitem7,jdbcType=VARCHAR},
+      </if>
+      <if test="defitem8 != null" >
+        defitem8 = #{defitem8,jdbcType=VARCHAR},
+      </if>
+      <if test="defitem9 != null" >
+        defitem9 = #{defitem9,jdbcType=VARCHAR},
+      </if>
+      <if test="defitem10 != null" >
+        defitem10 = #{defitem10,jdbcType=VARCHAR},
+      </if>
+      <if test="defitem11 != null" >
+        defitem11 = #{defitem11,jdbcType=VARCHAR},
+      </if>
+      <if test="defitem12 != null" >
+        defitem12 = #{defitem12,jdbcType=VARCHAR},
+      </if>
+      <if test="defitem13 != null" >
+        defitem13 = #{defitem13,jdbcType=VARCHAR},
+      </if>
+      <if test="defitem14 != null" >
+        defitem14 = #{defitem14,jdbcType=VARCHAR},
+      </if>
+      <if test="defitem15 != null" >
+        defitem15 = #{defitem15,jdbcType=VARCHAR},
+      </if>
+      <if test="defitem16 != null" >
+        defitem16 = #{defitem16,jdbcType=VARCHAR},
+      </if>
+      <if test="defitem17 != null" >
+        defitem17 = #{defitem17,jdbcType=VARCHAR},
+      </if>
+      <if test="defitem18 != null" >
+        defitem18 = #{defitem18,jdbcType=VARCHAR},
+      </if>
+      <if test="defitem19 != null" >
+        defitem19 = #{defitem19,jdbcType=VARCHAR},
+      </if>
+      <if test="defitem20 != null" >
+        defitem20 = #{defitem20,jdbcType=VARCHAR},
+      </if>
+      <if test="ts != null" >
+        ts = #{ts,jdbcType=TIMESTAMP},
+      </if>
+      <if test="valid != null" >
+        valid = #{valid,jdbcType=BIT},
+      </if>
+      <if test="djlxpk != null" >
+        djlxpk = #{djlxpk,jdbcType=VARCHAR},
+      </if>
+      <if test="descript != null" >
+        descript = #{descript,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="billtype != null" >
+        billType = #{billtype,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="errormsg != null" >
+        errorMsg = #{errormsg,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.ybz.entity.NodeLoanBillWithBLOBs" >
+    update node_loanbill
+    set pk = #{pk,jdbcType=VARCHAR},
+      user_id = #{userId,jdbcType=VARCHAR},
+      money = #{money,jdbcType=DOUBLE},
+      hkye = #{hkye,jdbcType=DOUBLE},
+      hkzt = #{hkzt,jdbcType=VARCHAR},
+      szxm = #{szxm,jdbcType=VARCHAR},
+      project = #{project,jdbcType=VARCHAR},
+      bankAccountKey = #{bankaccountkey,jdbcType=VARCHAR},
+      bankAccount = #{bankaccount,jdbcType=VARCHAR},
+      dealdate = #{dealdate,jdbcType=DATE},
+      billstatus = #{billstatus,jdbcType=INTEGER},
+      pk_bill = #{pkBill,jdbcType=VARCHAR},
+      defitem1 = #{defitem1,jdbcType=VARCHAR},
+      defitem2 = #{defitem2,jdbcType=VARCHAR},
+      defitem3 = #{defitem3,jdbcType=VARCHAR},
+      defitem4 = #{defitem4,jdbcType=VARCHAR},
+      defitem5 = #{defitem5,jdbcType=VARCHAR},
+      defitem6 = #{defitem6,jdbcType=VARCHAR},
+      defitem7 = #{defitem7,jdbcType=VARCHAR},
+      defitem8 = #{defitem8,jdbcType=VARCHAR},
+      defitem9 = #{defitem9,jdbcType=VARCHAR},
+      defitem10 = #{defitem10,jdbcType=VARCHAR},
+      defitem11 = #{defitem11,jdbcType=VARCHAR},
+      defitem12 = #{defitem12,jdbcType=VARCHAR},
+      defitem13 = #{defitem13,jdbcType=VARCHAR},
+      defitem14 = #{defitem14,jdbcType=VARCHAR},
+      defitem15 = #{defitem15,jdbcType=VARCHAR},
+      defitem16 = #{defitem16,jdbcType=VARCHAR},
+      defitem17 = #{defitem17,jdbcType=VARCHAR},
+      defitem18 = #{defitem18,jdbcType=VARCHAR},
+      defitem19 = #{defitem19,jdbcType=VARCHAR},
+      defitem20 = #{defitem20,jdbcType=VARCHAR},
+      ts = #{ts,jdbcType=TIMESTAMP},
+      valid = #{valid,jdbcType=BIT},
+      djlxpk = #{djlxpk,jdbcType=VARCHAR},
+      descript = #{descript,jdbcType=LONGVARCHAR},
+      billType = #{billtype,jdbcType=LONGVARCHAR},
+      errorMsg = #{errormsg,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ybz.entity.NodeLoanBill" >
+    update node_loanbill
+    set pk = #{pk,jdbcType=VARCHAR},
+      user_id = #{userId,jdbcType=VARCHAR},
+      money = #{money,jdbcType=DOUBLE},
+      hkye = #{hkye,jdbcType=DOUBLE},
+      hkzt = #{hkzt,jdbcType=VARCHAR},
+      szxm = #{szxm,jdbcType=VARCHAR},
+      project = #{project,jdbcType=VARCHAR},
+      bankAccountKey = #{bankaccountkey,jdbcType=VARCHAR},
+      bankAccount = #{bankaccount,jdbcType=VARCHAR},
+      dealdate = #{dealdate,jdbcType=DATE},
+      billstatus = #{billstatus,jdbcType=INTEGER},
+      pk_bill = #{pkBill,jdbcType=VARCHAR},
+      defitem1 = #{defitem1,jdbcType=VARCHAR},
+      defitem2 = #{defitem2,jdbcType=VARCHAR},
+      defitem3 = #{defitem3,jdbcType=VARCHAR},
+      defitem4 = #{defitem4,jdbcType=VARCHAR},
+      defitem5 = #{defitem5,jdbcType=VARCHAR},
+      defitem6 = #{defitem6,jdbcType=VARCHAR},
+      defitem7 = #{defitem7,jdbcType=VARCHAR},
+      defitem8 = #{defitem8,jdbcType=VARCHAR},
+      defitem9 = #{defitem9,jdbcType=VARCHAR},
+      defitem10 = #{defitem10,jdbcType=VARCHAR},
+      defitem11 = #{defitem11,jdbcType=VARCHAR},
+      defitem12 = #{defitem12,jdbcType=VARCHAR},
+      defitem13 = #{defitem13,jdbcType=VARCHAR},
+      defitem14 = #{defitem14,jdbcType=VARCHAR},
+      defitem15 = #{defitem15,jdbcType=VARCHAR},
+      defitem16 = #{defitem16,jdbcType=VARCHAR},
+      defitem17 = #{defitem17,jdbcType=VARCHAR},
+      defitem18 = #{defitem18,jdbcType=VARCHAR},
+      defitem19 = #{defitem19,jdbcType=VARCHAR},
+      defitem20 = #{defitem20,jdbcType=VARCHAR},
+      ts = #{ts,jdbcType=TIMESTAMP},
+      valid = #{valid,jdbcType=BIT},
+      djlxpk = #{djlxpk,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

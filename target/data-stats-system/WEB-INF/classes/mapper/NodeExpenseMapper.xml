@@ -1,0 +1,765 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ybz.dao.NodeExpenseMapper" >
+  <resultMap id="BaseResultMap" type="com.ybz.entity.NodeExpense" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="pk" property="pk" jdbcType="VARCHAR" />
+    <result column="userid" property="userid" jdbcType="VARCHAR" />
+    <result column="expense_date" property="expenseDate" jdbcType="DATE" />
+    <result column="money" property="money" jdbcType="DOUBLE" />
+    <result column="ts" property="ts" jdbcType="TIMESTAMP" />
+    <result column="djlxpk" property="djlxpk" jdbcType="VARCHAR" />
+    <result column="billstatus" property="billstatus" jdbcType="INTEGER" />
+    <result column="billtypecode" property="billtypecode" jdbcType="VARCHAR" />
+    <result column="billtypename" property="billtypename" jdbcType="VARCHAR" />
+    <result column="pk_bill" property="pkBill" jdbcType="VARCHAR" />
+    <result column="dealdate" property="dealdate" jdbcType="DATE" />
+    <result column="valid" property="valid" jdbcType="BIT" />
+    <result column="zdyhead" property="zdyhead" jdbcType="VARCHAR" />
+    <result column="zdyheadValue" property="zdyheadvalue" jdbcType="VARCHAR" />
+    <result column="bankAccountKey" property="bankaccountkey" jdbcType="VARCHAR" />
+    <result column="bankAccount" property="bankaccount" jdbcType="VARCHAR" />
+    <result column="szitemKey" property="szitemkey" jdbcType="VARCHAR" />
+    <result column="szitemValue" property="szitemvalue" jdbcType="VARCHAR" />
+    <result column="requisitionKey" property="requisitionkey" jdbcType="VARCHAR" />
+    <result column="requisition" property="requisition" jdbcType="VARCHAR" />
+    <result column="defitem1" property="defitem1" jdbcType="VARCHAR" />
+    <result column="defitem2" property="defitem2" jdbcType="VARCHAR" />
+    <result column="defitem3" property="defitem3" jdbcType="VARCHAR" />
+    <result column="defitem4" property="defitem4" jdbcType="VARCHAR" />
+    <result column="defitem5" property="defitem5" jdbcType="VARCHAR" />
+    <result column="defitem6" property="defitem6" jdbcType="VARCHAR" />
+    <result column="defitem7" property="defitem7" jdbcType="VARCHAR" />
+    <result column="defitem8" property="defitem8" jdbcType="VARCHAR" />
+    <result column="defitem9" property="defitem9" jdbcType="VARCHAR" />
+    <result column="defitem10" property="defitem10" jdbcType="VARCHAR" />
+    <result column="over_standard" property="overStandard" jdbcType="BIT" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.ybz.entity.NodeExpenseWithBLOBs" extends="BaseResultMap" >
+    <result column="descript" property="descript" jdbcType="LONGVARCHAR" />
+    <result column="errorMsg" property="errormsg" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, pk, userid, expense_date, money, ts, djlxpk, billstatus, billtypecode, billtypename, 
+    pk_bill, dealdate, valid, zdyhead, zdyheadValue, bankAccountKey, bankAccount, szitemKey, 
+    szitemValue, requisitionKey, requisition, defitem1, defitem2, defitem3, defitem4, 
+    defitem5, defitem6, defitem7, defitem8, defitem9, defitem10, over_standard
+  </sql>
+  <sql id="Blob_Column_List" >
+    descript, errorMsg
+  </sql>
+  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.ybz.entity.NodeExpenseExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from node_expense
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.ybz.entity.NodeExpenseExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from node_expense
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from node_expense
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from node_expense
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.ybz.entity.NodeExpenseExample" >
+    delete from node_expense
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.ybz.entity.NodeExpenseWithBLOBs" >
+    insert into node_expense (id, pk, userid, 
+      expense_date, money, ts, 
+      djlxpk, billstatus, billtypecode, 
+      billtypename, pk_bill, dealdate, 
+      valid, zdyhead, zdyheadValue, 
+      bankAccountKey, bankAccount, szitemKey, 
+      szitemValue, requisitionKey, requisition, 
+      defitem1, defitem2, defitem3, 
+      defitem4, defitem5, defitem6, 
+      defitem7, defitem8, defitem9, 
+      defitem10, over_standard, descript, 
+      errorMsg)
+    values (#{id,jdbcType=INTEGER}, #{pk,jdbcType=VARCHAR}, #{userid,jdbcType=VARCHAR}, 
+      #{expenseDate,jdbcType=DATE}, #{money,jdbcType=DOUBLE}, #{ts,jdbcType=TIMESTAMP}, 
+      #{djlxpk,jdbcType=VARCHAR}, #{billstatus,jdbcType=INTEGER}, #{billtypecode,jdbcType=VARCHAR}, 
+      #{billtypename,jdbcType=VARCHAR}, #{pkBill,jdbcType=VARCHAR}, #{dealdate,jdbcType=DATE}, 
+      #{valid,jdbcType=BIT}, #{zdyhead,jdbcType=VARCHAR}, #{zdyheadvalue,jdbcType=VARCHAR}, 
+      #{bankaccountkey,jdbcType=VARCHAR}, #{bankaccount,jdbcType=VARCHAR}, #{szitemkey,jdbcType=VARCHAR}, 
+      #{szitemvalue,jdbcType=VARCHAR}, #{requisitionkey,jdbcType=VARCHAR}, #{requisition,jdbcType=VARCHAR}, 
+      #{defitem1,jdbcType=VARCHAR}, #{defitem2,jdbcType=VARCHAR}, #{defitem3,jdbcType=VARCHAR}, 
+      #{defitem4,jdbcType=VARCHAR}, #{defitem5,jdbcType=VARCHAR}, #{defitem6,jdbcType=VARCHAR}, 
+      #{defitem7,jdbcType=VARCHAR}, #{defitem8,jdbcType=VARCHAR}, #{defitem9,jdbcType=VARCHAR}, 
+      #{defitem10,jdbcType=VARCHAR}, #{overStandard,jdbcType=BIT}, #{descript,jdbcType=LONGVARCHAR}, 
+      #{errormsg,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ybz.entity.NodeExpenseWithBLOBs" >
+    insert into node_expense
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="pk != null" >
+        pk,
+      </if>
+      <if test="userid != null" >
+        userid,
+      </if>
+      <if test="expenseDate != null" >
+        expense_date,
+      </if>
+      <if test="money != null" >
+        money,
+      </if>
+      <if test="ts != null" >
+        ts,
+      </if>
+      <if test="djlxpk != null" >
+        djlxpk,
+      </if>
+      <if test="billstatus != null" >
+        billstatus,
+      </if>
+      <if test="billtypecode != null" >
+        billtypecode,
+      </if>
+      <if test="billtypename != null" >
+        billtypename,
+      </if>
+      <if test="pkBill != null" >
+        pk_bill,
+      </if>
+      <if test="dealdate != null" >
+        dealdate,
+      </if>
+      <if test="valid != null" >
+        valid,
+      </if>
+      <if test="zdyhead != null" >
+        zdyhead,
+      </if>
+      <if test="zdyheadvalue != null" >
+        zdyheadValue,
+      </if>
+      <if test="bankaccountkey != null" >
+        bankAccountKey,
+      </if>
+      <if test="bankaccount != null" >
+        bankAccount,
+      </if>
+      <if test="szitemkey != null" >
+        szitemKey,
+      </if>
+      <if test="szitemvalue != null" >
+        szitemValue,
+      </if>
+      <if test="requisitionkey != null" >
+        requisitionKey,
+      </if>
+      <if test="requisition != null" >
+        requisition,
+      </if>
+      <if test="defitem1 != null" >
+        defitem1,
+      </if>
+      <if test="defitem2 != null" >
+        defitem2,
+      </if>
+      <if test="defitem3 != null" >
+        defitem3,
+      </if>
+      <if test="defitem4 != null" >
+        defitem4,
+      </if>
+      <if test="defitem5 != null" >
+        defitem5,
+      </if>
+      <if test="defitem6 != null" >
+        defitem6,
+      </if>
+      <if test="defitem7 != null" >
+        defitem7,
+      </if>
+      <if test="defitem8 != null" >
+        defitem8,
+      </if>
+      <if test="defitem9 != null" >
+        defitem9,
+      </if>
+      <if test="defitem10 != null" >
+        defitem10,
+      </if>
+      <if test="overStandard != null" >
+        over_standard,
+      </if>
+      <if test="descript != null" >
+        descript,
+      </if>
+      <if test="errormsg != null" >
+        errorMsg,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="pk != null" >
+        #{pk,jdbcType=VARCHAR},
+      </if>
+      <if test="userid != null" >
+        #{userid,jdbcType=VARCHAR},
+      </if>
+      <if test="expenseDate != null" >
+        #{expenseDate,jdbcType=DATE},
+      </if>
+      <if test="money != null" >
+        #{money,jdbcType=DOUBLE},
+      </if>
+      <if test="ts != null" >
+        #{ts,jdbcType=TIMESTAMP},
+      </if>
+      <if test="djlxpk != null" >
+        #{djlxpk,jdbcType=VARCHAR},
+      </if>
+      <if test="billstatus != null" >
+        #{billstatus,jdbcType=INTEGER},
+      </if>
+      <if test="billtypecode != null" >
+        #{billtypecode,jdbcType=VARCHAR},
+      </if>
+      <if test="billtypename != null" >
+        #{billtypename,jdbcType=VARCHAR},
+      </if>
+      <if test="pkBill != null" >
+        #{pkBill,jdbcType=VARCHAR},
+      </if>
+      <if test="dealdate != null" >
+        #{dealdate,jdbcType=DATE},
+      </if>
+      <if test="valid != null" >
+        #{valid,jdbcType=BIT},
+      </if>
+      <if test="zdyhead != null" >
+        #{zdyhead,jdbcType=VARCHAR},
+      </if>
+      <if test="zdyheadvalue != null" >
+        #{zdyheadvalue,jdbcType=VARCHAR},
+      </if>
+      <if test="bankaccountkey != null" >
+        #{bankaccountkey,jdbcType=VARCHAR},
+      </if>
+      <if test="bankaccount != null" >
+        #{bankaccount,jdbcType=VARCHAR},
+      </if>
+      <if test="szitemkey != null" >
+        #{szitemkey,jdbcType=VARCHAR},
+      </if>
+      <if test="szitemvalue != null" >
+        #{szitemvalue,jdbcType=VARCHAR},
+      </if>
+      <if test="requisitionkey != null" >
+        #{requisitionkey,jdbcType=VARCHAR},
+      </if>
+      <if test="requisition != null" >
+        #{requisition,jdbcType=VARCHAR},
+      </if>
+      <if test="defitem1 != null" >
+        #{defitem1,jdbcType=VARCHAR},
+      </if>
+      <if test="defitem2 != null" >
+        #{defitem2,jdbcType=VARCHAR},
+      </if>
+      <if test="defitem3 != null" >
+        #{defitem3,jdbcType=VARCHAR},
+      </if>
+      <if test="defitem4 != null" >
+        #{defitem4,jdbcType=VARCHAR},
+      </if>
+      <if test="defitem5 != null" >
+        #{defitem5,jdbcType=VARCHAR},
+      </if>
+      <if test="defitem6 != null" >
+        #{defitem6,jdbcType=VARCHAR},
+      </if>
+      <if test="defitem7 != null" >
+        #{defitem7,jdbcType=VARCHAR},
+      </if>
+      <if test="defitem8 != null" >
+        #{defitem8,jdbcType=VARCHAR},
+      </if>
+      <if test="defitem9 != null" >
+        #{defitem9,jdbcType=VARCHAR},
+      </if>
+      <if test="defitem10 != null" >
+        #{defitem10,jdbcType=VARCHAR},
+      </if>
+      <if test="overStandard != null" >
+        #{overStandard,jdbcType=BIT},
+      </if>
+      <if test="descript != null" >
+        #{descript,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="errormsg != null" >
+        #{errormsg,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.ybz.entity.NodeExpenseExample" resultType="java.lang.Integer" >
+    select count(*) from node_expense
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update node_expense
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.pk != null" >
+        pk = #{record.pk,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userid != null" >
+        userid = #{record.userid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.expenseDate != null" >
+        expense_date = #{record.expenseDate,jdbcType=DATE},
+      </if>
+      <if test="record.money != null" >
+        money = #{record.money,jdbcType=DOUBLE},
+      </if>
+      <if test="record.ts != null" >
+        ts = #{record.ts,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.djlxpk != null" >
+        djlxpk = #{record.djlxpk,jdbcType=VARCHAR},
+      </if>
+      <if test="record.billstatus != null" >
+        billstatus = #{record.billstatus,jdbcType=INTEGER},
+      </if>
+      <if test="record.billtypecode != null" >
+        billtypecode = #{record.billtypecode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.billtypename != null" >
+        billtypename = #{record.billtypename,jdbcType=VARCHAR},
+      </if>
+      <if test="record.pkBill != null" >
+        pk_bill = #{record.pkBill,jdbcType=VARCHAR},
+      </if>
+      <if test="record.dealdate != null" >
+        dealdate = #{record.dealdate,jdbcType=DATE},
+      </if>
+      <if test="record.valid != null" >
+        valid = #{record.valid,jdbcType=BIT},
+      </if>
+      <if test="record.zdyhead != null" >
+        zdyhead = #{record.zdyhead,jdbcType=VARCHAR},
+      </if>
+      <if test="record.zdyheadvalue != null" >
+        zdyheadValue = #{record.zdyheadvalue,jdbcType=VARCHAR},
+      </if>
+      <if test="record.bankaccountkey != null" >
+        bankAccountKey = #{record.bankaccountkey,jdbcType=VARCHAR},
+      </if>
+      <if test="record.bankaccount != null" >
+        bankAccount = #{record.bankaccount,jdbcType=VARCHAR},
+      </if>
+      <if test="record.szitemkey != null" >
+        szitemKey = #{record.szitemkey,jdbcType=VARCHAR},
+      </if>
+      <if test="record.szitemvalue != null" >
+        szitemValue = #{record.szitemvalue,jdbcType=VARCHAR},
+      </if>
+      <if test="record.requisitionkey != null" >
+        requisitionKey = #{record.requisitionkey,jdbcType=VARCHAR},
+      </if>
+      <if test="record.requisition != null" >
+        requisition = #{record.requisition,jdbcType=VARCHAR},
+      </if>
+      <if test="record.defitem1 != null" >
+        defitem1 = #{record.defitem1,jdbcType=VARCHAR},
+      </if>
+      <if test="record.defitem2 != null" >
+        defitem2 = #{record.defitem2,jdbcType=VARCHAR},
+      </if>
+      <if test="record.defitem3 != null" >
+        defitem3 = #{record.defitem3,jdbcType=VARCHAR},
+      </if>
+      <if test="record.defitem4 != null" >
+        defitem4 = #{record.defitem4,jdbcType=VARCHAR},
+      </if>
+      <if test="record.defitem5 != null" >
+        defitem5 = #{record.defitem5,jdbcType=VARCHAR},
+      </if>
+      <if test="record.defitem6 != null" >
+        defitem6 = #{record.defitem6,jdbcType=VARCHAR},
+      </if>
+      <if test="record.defitem7 != null" >
+        defitem7 = #{record.defitem7,jdbcType=VARCHAR},
+      </if>
+      <if test="record.defitem8 != null" >
+        defitem8 = #{record.defitem8,jdbcType=VARCHAR},
+      </if>
+      <if test="record.defitem9 != null" >
+        defitem9 = #{record.defitem9,jdbcType=VARCHAR},
+      </if>
+      <if test="record.defitem10 != null" >
+        defitem10 = #{record.defitem10,jdbcType=VARCHAR},
+      </if>
+      <if test="record.overStandard != null" >
+        over_standard = #{record.overStandard,jdbcType=BIT},
+      </if>
+      <if test="record.descript != null" >
+        descript = #{record.descript,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.errormsg != null" >
+        errorMsg = #{record.errormsg,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map" >
+    update node_expense
+    set id = #{record.id,jdbcType=INTEGER},
+      pk = #{record.pk,jdbcType=VARCHAR},
+      userid = #{record.userid,jdbcType=VARCHAR},
+      expense_date = #{record.expenseDate,jdbcType=DATE},
+      money = #{record.money,jdbcType=DOUBLE},
+      ts = #{record.ts,jdbcType=TIMESTAMP},
+      djlxpk = #{record.djlxpk,jdbcType=VARCHAR},
+      billstatus = #{record.billstatus,jdbcType=INTEGER},
+      billtypecode = #{record.billtypecode,jdbcType=VARCHAR},
+      billtypename = #{record.billtypename,jdbcType=VARCHAR},
+      pk_bill = #{record.pkBill,jdbcType=VARCHAR},
+      dealdate = #{record.dealdate,jdbcType=DATE},
+      valid = #{record.valid,jdbcType=BIT},
+      zdyhead = #{record.zdyhead,jdbcType=VARCHAR},
+      zdyheadValue = #{record.zdyheadvalue,jdbcType=VARCHAR},
+      bankAccountKey = #{record.bankaccountkey,jdbcType=VARCHAR},
+      bankAccount = #{record.bankaccount,jdbcType=VARCHAR},
+      szitemKey = #{record.szitemkey,jdbcType=VARCHAR},
+      szitemValue = #{record.szitemvalue,jdbcType=VARCHAR},
+      requisitionKey = #{record.requisitionkey,jdbcType=VARCHAR},
+      requisition = #{record.requisition,jdbcType=VARCHAR},
+      defitem1 = #{record.defitem1,jdbcType=VARCHAR},
+      defitem2 = #{record.defitem2,jdbcType=VARCHAR},
+      defitem3 = #{record.defitem3,jdbcType=VARCHAR},
+      defitem4 = #{record.defitem4,jdbcType=VARCHAR},
+      defitem5 = #{record.defitem5,jdbcType=VARCHAR},
+      defitem6 = #{record.defitem6,jdbcType=VARCHAR},
+      defitem7 = #{record.defitem7,jdbcType=VARCHAR},
+      defitem8 = #{record.defitem8,jdbcType=VARCHAR},
+      defitem9 = #{record.defitem9,jdbcType=VARCHAR},
+      defitem10 = #{record.defitem10,jdbcType=VARCHAR},
+      over_standard = #{record.overStandard,jdbcType=BIT},
+      descript = #{record.descript,jdbcType=LONGVARCHAR},
+      errorMsg = #{record.errormsg,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update node_expense
+    set id = #{record.id,jdbcType=INTEGER},
+      pk = #{record.pk,jdbcType=VARCHAR},
+      userid = #{record.userid,jdbcType=VARCHAR},
+      expense_date = #{record.expenseDate,jdbcType=DATE},
+      money = #{record.money,jdbcType=DOUBLE},
+      ts = #{record.ts,jdbcType=TIMESTAMP},
+      djlxpk = #{record.djlxpk,jdbcType=VARCHAR},
+      billstatus = #{record.billstatus,jdbcType=INTEGER},
+      billtypecode = #{record.billtypecode,jdbcType=VARCHAR},
+      billtypename = #{record.billtypename,jdbcType=VARCHAR},
+      pk_bill = #{record.pkBill,jdbcType=VARCHAR},
+      dealdate = #{record.dealdate,jdbcType=DATE},
+      valid = #{record.valid,jdbcType=BIT},
+      zdyhead = #{record.zdyhead,jdbcType=VARCHAR},
+      zdyheadValue = #{record.zdyheadvalue,jdbcType=VARCHAR},
+      bankAccountKey = #{record.bankaccountkey,jdbcType=VARCHAR},
+      bankAccount = #{record.bankaccount,jdbcType=VARCHAR},
+      szitemKey = #{record.szitemkey,jdbcType=VARCHAR},
+      szitemValue = #{record.szitemvalue,jdbcType=VARCHAR},
+      requisitionKey = #{record.requisitionkey,jdbcType=VARCHAR},
+      requisition = #{record.requisition,jdbcType=VARCHAR},
+      defitem1 = #{record.defitem1,jdbcType=VARCHAR},
+      defitem2 = #{record.defitem2,jdbcType=VARCHAR},
+      defitem3 = #{record.defitem3,jdbcType=VARCHAR},
+      defitem4 = #{record.defitem4,jdbcType=VARCHAR},
+      defitem5 = #{record.defitem5,jdbcType=VARCHAR},
+      defitem6 = #{record.defitem6,jdbcType=VARCHAR},
+      defitem7 = #{record.defitem7,jdbcType=VARCHAR},
+      defitem8 = #{record.defitem8,jdbcType=VARCHAR},
+      defitem9 = #{record.defitem9,jdbcType=VARCHAR},
+      defitem10 = #{record.defitem10,jdbcType=VARCHAR},
+      over_standard = #{record.overStandard,jdbcType=BIT}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ybz.entity.NodeExpenseWithBLOBs" >
+    update node_expense
+    <set >
+      <if test="pk != null" >
+        pk = #{pk,jdbcType=VARCHAR},
+      </if>
+      <if test="userid != null" >
+        userid = #{userid,jdbcType=VARCHAR},
+      </if>
+      <if test="expenseDate != null" >
+        expense_date = #{expenseDate,jdbcType=DATE},
+      </if>
+      <if test="money != null" >
+        money = #{money,jdbcType=DOUBLE},
+      </if>
+      <if test="ts != null" >
+        ts = #{ts,jdbcType=TIMESTAMP},
+      </if>
+      <if test="djlxpk != null" >
+        djlxpk = #{djlxpk,jdbcType=VARCHAR},
+      </if>
+      <if test="billstatus != null" >
+        billstatus = #{billstatus,jdbcType=INTEGER},
+      </if>
+      <if test="billtypecode != null" >
+        billtypecode = #{billtypecode,jdbcType=VARCHAR},
+      </if>
+      <if test="billtypename != null" >
+        billtypename = #{billtypename,jdbcType=VARCHAR},
+      </if>
+      <if test="pkBill != null" >
+        pk_bill = #{pkBill,jdbcType=VARCHAR},
+      </if>
+      <if test="dealdate != null" >
+        dealdate = #{dealdate,jdbcType=DATE},
+      </if>
+      <if test="valid != null" >
+        valid = #{valid,jdbcType=BIT},
+      </if>
+      <if test="zdyhead != null" >
+        zdyhead = #{zdyhead,jdbcType=VARCHAR},
+      </if>
+      <if test="zdyheadvalue != null" >
+        zdyheadValue = #{zdyheadvalue,jdbcType=VARCHAR},
+      </if>
+      <if test="bankaccountkey != null" >
+        bankAccountKey = #{bankaccountkey,jdbcType=VARCHAR},
+      </if>
+      <if test="bankaccount != null" >
+        bankAccount = #{bankaccount,jdbcType=VARCHAR},
+      </if>
+      <if test="szitemkey != null" >
+        szitemKey = #{szitemkey,jdbcType=VARCHAR},
+      </if>
+      <if test="szitemvalue != null" >
+        szitemValue = #{szitemvalue,jdbcType=VARCHAR},
+      </if>
+      <if test="requisitionkey != null" >
+        requisitionKey = #{requisitionkey,jdbcType=VARCHAR},
+      </if>
+      <if test="requisition != null" >
+        requisition = #{requisition,jdbcType=VARCHAR},
+      </if>
+      <if test="defitem1 != null" >
+        defitem1 = #{defitem1,jdbcType=VARCHAR},
+      </if>
+      <if test="defitem2 != null" >
+        defitem2 = #{defitem2,jdbcType=VARCHAR},
+      </if>
+      <if test="defitem3 != null" >
+        defitem3 = #{defitem3,jdbcType=VARCHAR},
+      </if>
+      <if test="defitem4 != null" >
+        defitem4 = #{defitem4,jdbcType=VARCHAR},
+      </if>
+      <if test="defitem5 != null" >
+        defitem5 = #{defitem5,jdbcType=VARCHAR},
+      </if>
+      <if test="defitem6 != null" >
+        defitem6 = #{defitem6,jdbcType=VARCHAR},
+      </if>
+      <if test="defitem7 != null" >
+        defitem7 = #{defitem7,jdbcType=VARCHAR},
+      </if>
+      <if test="defitem8 != null" >
+        defitem8 = #{defitem8,jdbcType=VARCHAR},
+      </if>
+      <if test="defitem9 != null" >
+        defitem9 = #{defitem9,jdbcType=VARCHAR},
+      </if>
+      <if test="defitem10 != null" >
+        defitem10 = #{defitem10,jdbcType=VARCHAR},
+      </if>
+      <if test="overStandard != null" >
+        over_standard = #{overStandard,jdbcType=BIT},
+      </if>
+      <if test="descript != null" >
+        descript = #{descript,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="errormsg != null" >
+        errorMsg = #{errormsg,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.ybz.entity.NodeExpenseWithBLOBs" >
+    update node_expense
+    set pk = #{pk,jdbcType=VARCHAR},
+      userid = #{userid,jdbcType=VARCHAR},
+      expense_date = #{expenseDate,jdbcType=DATE},
+      money = #{money,jdbcType=DOUBLE},
+      ts = #{ts,jdbcType=TIMESTAMP},
+      djlxpk = #{djlxpk,jdbcType=VARCHAR},
+      billstatus = #{billstatus,jdbcType=INTEGER},
+      billtypecode = #{billtypecode,jdbcType=VARCHAR},
+      billtypename = #{billtypename,jdbcType=VARCHAR},
+      pk_bill = #{pkBill,jdbcType=VARCHAR},
+      dealdate = #{dealdate,jdbcType=DATE},
+      valid = #{valid,jdbcType=BIT},
+      zdyhead = #{zdyhead,jdbcType=VARCHAR},
+      zdyheadValue = #{zdyheadvalue,jdbcType=VARCHAR},
+      bankAccountKey = #{bankaccountkey,jdbcType=VARCHAR},
+      bankAccount = #{bankaccount,jdbcType=VARCHAR},
+      szitemKey = #{szitemkey,jdbcType=VARCHAR},
+      szitemValue = #{szitemvalue,jdbcType=VARCHAR},
+      requisitionKey = #{requisitionkey,jdbcType=VARCHAR},
+      requisition = #{requisition,jdbcType=VARCHAR},
+      defitem1 = #{defitem1,jdbcType=VARCHAR},
+      defitem2 = #{defitem2,jdbcType=VARCHAR},
+      defitem3 = #{defitem3,jdbcType=VARCHAR},
+      defitem4 = #{defitem4,jdbcType=VARCHAR},
+      defitem5 = #{defitem5,jdbcType=VARCHAR},
+      defitem6 = #{defitem6,jdbcType=VARCHAR},
+      defitem7 = #{defitem7,jdbcType=VARCHAR},
+      defitem8 = #{defitem8,jdbcType=VARCHAR},
+      defitem9 = #{defitem9,jdbcType=VARCHAR},
+      defitem10 = #{defitem10,jdbcType=VARCHAR},
+      over_standard = #{overStandard,jdbcType=BIT},
+      descript = #{descript,jdbcType=LONGVARCHAR},
+      errorMsg = #{errormsg,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ybz.entity.NodeExpense" >
+    update node_expense
+    set pk = #{pk,jdbcType=VARCHAR},
+      userid = #{userid,jdbcType=VARCHAR},
+      expense_date = #{expenseDate,jdbcType=DATE},
+      money = #{money,jdbcType=DOUBLE},
+      ts = #{ts,jdbcType=TIMESTAMP},
+      djlxpk = #{djlxpk,jdbcType=VARCHAR},
+      billstatus = #{billstatus,jdbcType=INTEGER},
+      billtypecode = #{billtypecode,jdbcType=VARCHAR},
+      billtypename = #{billtypename,jdbcType=VARCHAR},
+      pk_bill = #{pkBill,jdbcType=VARCHAR},
+      dealdate = #{dealdate,jdbcType=DATE},
+      valid = #{valid,jdbcType=BIT},
+      zdyhead = #{zdyhead,jdbcType=VARCHAR},
+      zdyheadValue = #{zdyheadvalue,jdbcType=VARCHAR},
+      bankAccountKey = #{bankaccountkey,jdbcType=VARCHAR},
+      bankAccount = #{bankaccount,jdbcType=VARCHAR},
+      szitemKey = #{szitemkey,jdbcType=VARCHAR},
+      szitemValue = #{szitemvalue,jdbcType=VARCHAR},
+      requisitionKey = #{requisitionkey,jdbcType=VARCHAR},
+      requisition = #{requisition,jdbcType=VARCHAR},
+      defitem1 = #{defitem1,jdbcType=VARCHAR},
+      defitem2 = #{defitem2,jdbcType=VARCHAR},
+      defitem3 = #{defitem3,jdbcType=VARCHAR},
+      defitem4 = #{defitem4,jdbcType=VARCHAR},
+      defitem5 = #{defitem5,jdbcType=VARCHAR},
+      defitem6 = #{defitem6,jdbcType=VARCHAR},
+      defitem7 = #{defitem7,jdbcType=VARCHAR},
+      defitem8 = #{defitem8,jdbcType=VARCHAR},
+      defitem9 = #{defitem9,jdbcType=VARCHAR},
+      defitem10 = #{defitem10,jdbcType=VARCHAR},
+      over_standard = #{overStandard,jdbcType=BIT}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

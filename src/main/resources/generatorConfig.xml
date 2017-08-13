@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+<!--mybatis-generator-maven-plugin生成数据库实体的配置文件-->
+<generatorConfiguration>
+    <!--导入属性配置，前面我们写的一个配置文件，你也可以直接使用mybatis的jdbc的配置文件 -->
+    <properties resource="db.properties"></properties>
+    <!-- 数据库驱动，注意，这里必须要修改成你的数据库的驱动地址-->
+    <classPathEntry
+            location="C:/Users/zhangybt/.m2/repository/mysql/mysql-connector-java/5.1.30/mysql-connector-java-5.1.30.jar"/>
+    <!--<classPathEntry
+            location="C:/Users/Guoru/.m2/repository/mysql/mysql-connector-java/5.1.38/mysql-connector-java-5.1.38.jar"/>-->
+    <context id="DB2Tables" targetRuntime="MyBatis3">
+        <commentGenerator>
+            <property name="suppressDate" value="true"/>
+            <!-- 是否去除自动生成的注释 true：是 ： false:否 -->
+            <property name="suppressAllComments" value="true"/>
+        </commentGenerator>
+        <!--数据库链接URL，用户名、密码 -->
+        <jdbcConnection driverClass="${jdbc.driver}" connectionURL="${jdbc.url}" userId="${jdbc.username}" password="${jdbc.password}">
+        </jdbcConnection>
+        <javaTypeResolver>
+            <property name="forceBigDecimals" value="false"/>
+        </javaTypeResolver>
+        <!-- 生成模型的包名和位置-->
+        <javaModelGenerator targetPackage="com.ybz.entity" targetProject="src/main/java">
+            <property name="enableSubPackages" value="true"/>
+            <property name="trimStrings" value="true"/>
+        </javaModelGenerator>
+        <!-- 生成映射文件的包名和位置-->
+        <sqlMapGenerator targetPackage="mapper" targetProject="src/main/resources">
+            <property name="enableSubPackages" value="true"/>
+        </sqlMapGenerator>
+        <!-- 生成DAO的包名和位置-->
+        <javaClientGenerator type="XMLMAPPER" targetPackage="com.ybz.dao" targetProject="src/main/java">
+            <property name="enableSubPackages" value="true"/>
+        </javaClientGenerator>
+
+        <!-- 要生成的表 tableName是数据库中的表名或视图名 domainObjectName是实体类名，这里举例，只配置了一个table，你可以配置多个-->
+
+       <!-- <table tableName="seckill" domainObjectName="Seckill" enableCountByExample="false"
+               enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"/>-->
+        <!--<table tableName="seckill" domainObjectName="Seckill" />-->
+        <!--<table tableName="user_t" domainObjectName="User" />-->
+        <!--<table tableName="user_bank" domainObjectName="UserBank" />-->
+        <!--<table tableName="nc_info" domainObjectName="NcInfo" />-->
+        <table tableName="nc_user" domainObjectName="NcUser" />
+        <!--<table tableName="dept" domainObjectName="Dept" />-->
+        <!--<table tableName="dict" domainObjectName="Dict" />-->
+        <!--<table tableName="login_log" domainObjectName="LoginLog" />-->
+        <!--<table tableName="menu" domainObjectName="Menu" />-->
+        <!--<table tableName="notice" domainObjectName="Notice" />-->
+        <!--<table tableName="operation_log" domainObjectName="OperationLog" />-->
+        <!--<table tableName="relation" domainObjectName="Relation" />-->
+        <!--<table tableName="role" domainObjectName="Role" />-->
+
+
+    </context>
+</generatorConfiguration>

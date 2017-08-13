@@ -1,0 +1,413 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ybz.dao.NodeEatingMapper" >
+  <resultMap id="BaseResultMap" type="com.ybz.entity.NodeEating" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="pk" property="pk" jdbcType="VARCHAR" />
+    <result column="user_id" property="userId" jdbcType="VARCHAR" />
+    <result column="money" property="money" jdbcType="DOUBLE" />
+    <result column="company" property="company" jdbcType="VARCHAR" />
+    <result column="person_num" property="personNum" jdbcType="INTEGER" />
+    <result column="eating_date" property="eatingDate" jdbcType="DATE" />
+    <result column="valid" property="valid" jdbcType="BIT" />
+    <result column="expense" property="expense" jdbcType="BIT" />
+    <result column="ts" property="ts" jdbcType="TIMESTAMP" />
+    <result column="imagesystemtype" property="imagesystemtype" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.ybz.entity.NodeEatingWithBLOBs" extends="BaseResultMap" >
+    <result column="filepath" property="filepath" jdbcType="LONGVARCHAR" />
+    <result column="note" property="note" jdbcType="LONGVARCHAR" />
+    <result column="tag_content" property="tagContent" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, pk, user_id, money, company, person_num, eating_date, valid, expense, ts, imagesystemtype
+  </sql>
+  <sql id="Blob_Column_List" >
+    filepath, note, tag_content
+  </sql>
+  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.ybz.entity.NodeEatingExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from node_eating
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.ybz.entity.NodeEatingExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from node_eating
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from node_eating
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from node_eating
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.ybz.entity.NodeEatingExample" >
+    delete from node_eating
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.ybz.entity.NodeEatingWithBLOBs" >
+    insert into node_eating (id, pk, user_id, 
+      money, company, person_num, 
+      eating_date, valid, expense, ts, 
+      imagesystemtype, filepath, note, 
+      tag_content)
+    values (#{id,jdbcType=INTEGER}, #{pk,jdbcType=VARCHAR}, #{userId,jdbcType=VARCHAR}, 
+      #{money,jdbcType=DOUBLE}, #{company,jdbcType=VARCHAR}, #{personNum,jdbcType=INTEGER}, 
+      #{eatingDate,jdbcType=DATE}, #{valid,jdbcType=BIT}, #{expense,jdbcType=BIT}, #{ts,jdbcType=TIMESTAMP}, 
+      #{imagesystemtype,jdbcType=VARCHAR}, #{filepath,jdbcType=LONGVARCHAR}, #{note,jdbcType=LONGVARCHAR}, 
+      #{tagContent,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ybz.entity.NodeEatingWithBLOBs" >
+    insert into node_eating
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="pk != null" >
+        pk,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="money != null" >
+        money,
+      </if>
+      <if test="company != null" >
+        company,
+      </if>
+      <if test="personNum != null" >
+        person_num,
+      </if>
+      <if test="eatingDate != null" >
+        eating_date,
+      </if>
+      <if test="valid != null" >
+        valid,
+      </if>
+      <if test="expense != null" >
+        expense,
+      </if>
+      <if test="ts != null" >
+        ts,
+      </if>
+      <if test="imagesystemtype != null" >
+        imagesystemtype,
+      </if>
+      <if test="filepath != null" >
+        filepath,
+      </if>
+      <if test="note != null" >
+        note,
+      </if>
+      <if test="tagContent != null" >
+        tag_content,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="pk != null" >
+        #{pk,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="money != null" >
+        #{money,jdbcType=DOUBLE},
+      </if>
+      <if test="company != null" >
+        #{company,jdbcType=VARCHAR},
+      </if>
+      <if test="personNum != null" >
+        #{personNum,jdbcType=INTEGER},
+      </if>
+      <if test="eatingDate != null" >
+        #{eatingDate,jdbcType=DATE},
+      </if>
+      <if test="valid != null" >
+        #{valid,jdbcType=BIT},
+      </if>
+      <if test="expense != null" >
+        #{expense,jdbcType=BIT},
+      </if>
+      <if test="ts != null" >
+        #{ts,jdbcType=TIMESTAMP},
+      </if>
+      <if test="imagesystemtype != null" >
+        #{imagesystemtype,jdbcType=VARCHAR},
+      </if>
+      <if test="filepath != null" >
+        #{filepath,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="note != null" >
+        #{note,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="tagContent != null" >
+        #{tagContent,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.ybz.entity.NodeEatingExample" resultType="java.lang.Integer" >
+    select count(*) from node_eating
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update node_eating
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.pk != null" >
+        pk = #{record.pk,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userId != null" >
+        user_id = #{record.userId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.money != null" >
+        money = #{record.money,jdbcType=DOUBLE},
+      </if>
+      <if test="record.company != null" >
+        company = #{record.company,jdbcType=VARCHAR},
+      </if>
+      <if test="record.personNum != null" >
+        person_num = #{record.personNum,jdbcType=INTEGER},
+      </if>
+      <if test="record.eatingDate != null" >
+        eating_date = #{record.eatingDate,jdbcType=DATE},
+      </if>
+      <if test="record.valid != null" >
+        valid = #{record.valid,jdbcType=BIT},
+      </if>
+      <if test="record.expense != null" >
+        expense = #{record.expense,jdbcType=BIT},
+      </if>
+      <if test="record.ts != null" >
+        ts = #{record.ts,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.imagesystemtype != null" >
+        imagesystemtype = #{record.imagesystemtype,jdbcType=VARCHAR},
+      </if>
+      <if test="record.filepath != null" >
+        filepath = #{record.filepath,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.note != null" >
+        note = #{record.note,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.tagContent != null" >
+        tag_content = #{record.tagContent,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map" >
+    update node_eating
+    set id = #{record.id,jdbcType=INTEGER},
+      pk = #{record.pk,jdbcType=VARCHAR},
+      user_id = #{record.userId,jdbcType=VARCHAR},
+      money = #{record.money,jdbcType=DOUBLE},
+      company = #{record.company,jdbcType=VARCHAR},
+      person_num = #{record.personNum,jdbcType=INTEGER},
+      eating_date = #{record.eatingDate,jdbcType=DATE},
+      valid = #{record.valid,jdbcType=BIT},
+      expense = #{record.expense,jdbcType=BIT},
+      ts = #{record.ts,jdbcType=TIMESTAMP},
+      imagesystemtype = #{record.imagesystemtype,jdbcType=VARCHAR},
+      filepath = #{record.filepath,jdbcType=LONGVARCHAR},
+      note = #{record.note,jdbcType=LONGVARCHAR},
+      tag_content = #{record.tagContent,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update node_eating
+    set id = #{record.id,jdbcType=INTEGER},
+      pk = #{record.pk,jdbcType=VARCHAR},
+      user_id = #{record.userId,jdbcType=VARCHAR},
+      money = #{record.money,jdbcType=DOUBLE},
+      company = #{record.company,jdbcType=VARCHAR},
+      person_num = #{record.personNum,jdbcType=INTEGER},
+      eating_date = #{record.eatingDate,jdbcType=DATE},
+      valid = #{record.valid,jdbcType=BIT},
+      expense = #{record.expense,jdbcType=BIT},
+      ts = #{record.ts,jdbcType=TIMESTAMP},
+      imagesystemtype = #{record.imagesystemtype,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ybz.entity.NodeEatingWithBLOBs" >
+    update node_eating
+    <set >
+      <if test="pk != null" >
+        pk = #{pk,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="money != null" >
+        money = #{money,jdbcType=DOUBLE},
+      </if>
+      <if test="company != null" >
+        company = #{company,jdbcType=VARCHAR},
+      </if>
+      <if test="personNum != null" >
+        person_num = #{personNum,jdbcType=INTEGER},
+      </if>
+      <if test="eatingDate != null" >
+        eating_date = #{eatingDate,jdbcType=DATE},
+      </if>
+      <if test="valid != null" >
+        valid = #{valid,jdbcType=BIT},
+      </if>
+      <if test="expense != null" >
+        expense = #{expense,jdbcType=BIT},
+      </if>
+      <if test="ts != null" >
+        ts = #{ts,jdbcType=TIMESTAMP},
+      </if>
+      <if test="imagesystemtype != null" >
+        imagesystemtype = #{imagesystemtype,jdbcType=VARCHAR},
+      </if>
+      <if test="filepath != null" >
+        filepath = #{filepath,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="note != null" >
+        note = #{note,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="tagContent != null" >
+        tag_content = #{tagContent,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.ybz.entity.NodeEatingWithBLOBs" >
+    update node_eating
+    set pk = #{pk,jdbcType=VARCHAR},
+      user_id = #{userId,jdbcType=VARCHAR},
+      money = #{money,jdbcType=DOUBLE},
+      company = #{company,jdbcType=VARCHAR},
+      person_num = #{personNum,jdbcType=INTEGER},
+      eating_date = #{eatingDate,jdbcType=DATE},
+      valid = #{valid,jdbcType=BIT},
+      expense = #{expense,jdbcType=BIT},
+      ts = #{ts,jdbcType=TIMESTAMP},
+      imagesystemtype = #{imagesystemtype,jdbcType=VARCHAR},
+      filepath = #{filepath,jdbcType=LONGVARCHAR},
+      note = #{note,jdbcType=LONGVARCHAR},
+      tag_content = #{tagContent,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ybz.entity.NodeEating" >
+    update node_eating
+    set pk = #{pk,jdbcType=VARCHAR},
+      user_id = #{userId,jdbcType=VARCHAR},
+      money = #{money,jdbcType=DOUBLE},
+      company = #{company,jdbcType=VARCHAR},
+      person_num = #{personNum,jdbcType=INTEGER},
+      eating_date = #{eatingDate,jdbcType=DATE},
+      valid = #{valid,jdbcType=BIT},
+      expense = #{expense,jdbcType=BIT},
+      ts = #{ts,jdbcType=TIMESTAMP},
+      imagesystemtype = #{imagesystemtype,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <select id="queryMoneyByDate" resultType="java.lang.Double" parameterType="com.ybz.entity.NodeEatingExample">
+    select SUM(money) from node_eating
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause"/>
+    </if>
+  </select>
+</mapper>

@@ -1,0 +1,520 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ybz.dao.NodeGatherMapper" >
+  <resultMap id="BaseResultMap" type="com.ybz.entity.NodeGather" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="pk" property="pk" jdbcType="VARCHAR" />
+    <result column="user_id" property="userId" jdbcType="VARCHAR" />
+    <result column="materiel" property="materiel" jdbcType="VARCHAR" />
+    <result column="unitprice" property="unitprice" jdbcType="DECIMAL" />
+    <result column="number" property="number" jdbcType="DECIMAL" />
+    <result column="money" property="money" jdbcType="DECIMAL" />
+    <result column="taxRate" property="taxrate" jdbcType="DECIMAL" />
+    <result column="tax" property="tax" jdbcType="DECIMAL" />
+    <result column="gather_date" property="gatherDate" jdbcType="DATE" />
+    <result column="invoice_number" property="invoiceNumber" jdbcType="VARCHAR" />
+    <result column="payee" property="payee" jdbcType="VARCHAR" />
+    <result column="expense" property="expense" jdbcType="BIT" />
+    <result column="valid" property="valid" jdbcType="BIT" />
+    <result column="ts" property="ts" jdbcType="TIMESTAMP" />
+    <result column="unit" property="unit" jdbcType="VARCHAR" />
+    <result column="imagesystemtype" property="imagesystemtype" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.ybz.entity.NodeGatherWithBLOBs" extends="BaseResultMap" >
+    <result column="note" property="note" jdbcType="LONGVARCHAR" />
+    <result column="tag_content" property="tagContent" jdbcType="LONGVARCHAR" />
+    <result column="filepath" property="filepath" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, pk, user_id, materiel, unitprice, number, money, taxRate, tax, gather_date, invoice_number, 
+    payee, expense, valid, ts, unit, imagesystemtype
+  </sql>
+  <sql id="Blob_Column_List" >
+    note, tag_content, filepath
+  </sql>
+  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.ybz.entity.NodeGatherExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from node_gather
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.ybz.entity.NodeGatherExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from node_gather
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from node_gather
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from node_gather
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.ybz.entity.NodeGatherExample" >
+    delete from node_gather
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.ybz.entity.NodeGatherWithBLOBs" >
+    insert into node_gather (id, pk, user_id, 
+      materiel, unitprice, number, 
+      money, taxRate, tax, 
+      gather_date, invoice_number, payee, 
+      expense, valid, ts, unit, 
+      imagesystemtype, note, tag_content, 
+      filepath)
+    values (#{id,jdbcType=INTEGER}, #{pk,jdbcType=VARCHAR}, #{userId,jdbcType=VARCHAR}, 
+      #{materiel,jdbcType=VARCHAR}, #{unitprice,jdbcType=DECIMAL}, #{number,jdbcType=DECIMAL}, 
+      #{money,jdbcType=DECIMAL}, #{taxrate,jdbcType=DECIMAL}, #{tax,jdbcType=DECIMAL}, 
+      #{gatherDate,jdbcType=DATE}, #{invoiceNumber,jdbcType=VARCHAR}, #{payee,jdbcType=VARCHAR}, 
+      #{expense,jdbcType=BIT}, #{valid,jdbcType=BIT}, #{ts,jdbcType=TIMESTAMP}, #{unit,jdbcType=VARCHAR}, 
+      #{imagesystemtype,jdbcType=VARCHAR}, #{note,jdbcType=LONGVARCHAR}, #{tagContent,jdbcType=LONGVARCHAR}, 
+      #{filepath,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ybz.entity.NodeGatherWithBLOBs" >
+    insert into node_gather
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="pk != null" >
+        pk,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="materiel != null" >
+        materiel,
+      </if>
+      <if test="unitprice != null" >
+        unitprice,
+      </if>
+      <if test="number != null" >
+        number,
+      </if>
+      <if test="money != null" >
+        money,
+      </if>
+      <if test="taxrate != null" >
+        taxRate,
+      </if>
+      <if test="tax != null" >
+        tax,
+      </if>
+      <if test="gatherDate != null" >
+        gather_date,
+      </if>
+      <if test="invoiceNumber != null" >
+        invoice_number,
+      </if>
+      <if test="payee != null" >
+        payee,
+      </if>
+      <if test="expense != null" >
+        expense,
+      </if>
+      <if test="valid != null" >
+        valid,
+      </if>
+      <if test="ts != null" >
+        ts,
+      </if>
+      <if test="unit != null" >
+        unit,
+      </if>
+      <if test="imagesystemtype != null" >
+        imagesystemtype,
+      </if>
+      <if test="note != null" >
+        note,
+      </if>
+      <if test="tagContent != null" >
+        tag_content,
+      </if>
+      <if test="filepath != null" >
+        filepath,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="pk != null" >
+        #{pk,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="materiel != null" >
+        #{materiel,jdbcType=VARCHAR},
+      </if>
+      <if test="unitprice != null" >
+        #{unitprice,jdbcType=DECIMAL},
+      </if>
+      <if test="number != null" >
+        #{number,jdbcType=DECIMAL},
+      </if>
+      <if test="money != null" >
+        #{money,jdbcType=DECIMAL},
+      </if>
+      <if test="taxrate != null" >
+        #{taxrate,jdbcType=DECIMAL},
+      </if>
+      <if test="tax != null" >
+        #{tax,jdbcType=DECIMAL},
+      </if>
+      <if test="gatherDate != null" >
+        #{gatherDate,jdbcType=DATE},
+      </if>
+      <if test="invoiceNumber != null" >
+        #{invoiceNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="payee != null" >
+        #{payee,jdbcType=VARCHAR},
+      </if>
+      <if test="expense != null" >
+        #{expense,jdbcType=BIT},
+      </if>
+      <if test="valid != null" >
+        #{valid,jdbcType=BIT},
+      </if>
+      <if test="ts != null" >
+        #{ts,jdbcType=TIMESTAMP},
+      </if>
+      <if test="unit != null" >
+        #{unit,jdbcType=VARCHAR},
+      </if>
+      <if test="imagesystemtype != null" >
+        #{imagesystemtype,jdbcType=VARCHAR},
+      </if>
+      <if test="note != null" >
+        #{note,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="tagContent != null" >
+        #{tagContent,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="filepath != null" >
+        #{filepath,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.ybz.entity.NodeGatherExample" resultType="java.lang.Integer" >
+    select count(*) from node_gather
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update node_gather
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.pk != null" >
+        pk = #{record.pk,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userId != null" >
+        user_id = #{record.userId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.materiel != null" >
+        materiel = #{record.materiel,jdbcType=VARCHAR},
+      </if>
+      <if test="record.unitprice != null" >
+        unitprice = #{record.unitprice,jdbcType=DECIMAL},
+      </if>
+      <if test="record.number != null" >
+        number = #{record.number,jdbcType=DECIMAL},
+      </if>
+      <if test="record.money != null" >
+        money = #{record.money,jdbcType=DECIMAL},
+      </if>
+      <if test="record.taxrate != null" >
+        taxRate = #{record.taxrate,jdbcType=DECIMAL},
+      </if>
+      <if test="record.tax != null" >
+        tax = #{record.tax,jdbcType=DECIMAL},
+      </if>
+      <if test="record.gatherDate != null" >
+        gather_date = #{record.gatherDate,jdbcType=DATE},
+      </if>
+      <if test="record.invoiceNumber != null" >
+        invoice_number = #{record.invoiceNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="record.payee != null" >
+        payee = #{record.payee,jdbcType=VARCHAR},
+      </if>
+      <if test="record.expense != null" >
+        expense = #{record.expense,jdbcType=BIT},
+      </if>
+      <if test="record.valid != null" >
+        valid = #{record.valid,jdbcType=BIT},
+      </if>
+      <if test="record.ts != null" >
+        ts = #{record.ts,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.unit != null" >
+        unit = #{record.unit,jdbcType=VARCHAR},
+      </if>
+      <if test="record.imagesystemtype != null" >
+        imagesystemtype = #{record.imagesystemtype,jdbcType=VARCHAR},
+      </if>
+      <if test="record.note != null" >
+        note = #{record.note,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.tagContent != null" >
+        tag_content = #{record.tagContent,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.filepath != null" >
+        filepath = #{record.filepath,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map" >
+    update node_gather
+    set id = #{record.id,jdbcType=INTEGER},
+      pk = #{record.pk,jdbcType=VARCHAR},
+      user_id = #{record.userId,jdbcType=VARCHAR},
+      materiel = #{record.materiel,jdbcType=VARCHAR},
+      unitprice = #{record.unitprice,jdbcType=DECIMAL},
+      number = #{record.number,jdbcType=DECIMAL},
+      money = #{record.money,jdbcType=DECIMAL},
+      taxRate = #{record.taxrate,jdbcType=DECIMAL},
+      tax = #{record.tax,jdbcType=DECIMAL},
+      gather_date = #{record.gatherDate,jdbcType=DATE},
+      invoice_number = #{record.invoiceNumber,jdbcType=VARCHAR},
+      payee = #{record.payee,jdbcType=VARCHAR},
+      expense = #{record.expense,jdbcType=BIT},
+      valid = #{record.valid,jdbcType=BIT},
+      ts = #{record.ts,jdbcType=TIMESTAMP},
+      unit = #{record.unit,jdbcType=VARCHAR},
+      imagesystemtype = #{record.imagesystemtype,jdbcType=VARCHAR},
+      note = #{record.note,jdbcType=LONGVARCHAR},
+      tag_content = #{record.tagContent,jdbcType=LONGVARCHAR},
+      filepath = #{record.filepath,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update node_gather
+    set id = #{record.id,jdbcType=INTEGER},
+      pk = #{record.pk,jdbcType=VARCHAR},
+      user_id = #{record.userId,jdbcType=VARCHAR},
+      materiel = #{record.materiel,jdbcType=VARCHAR},
+      unitprice = #{record.unitprice,jdbcType=DECIMAL},
+      number = #{record.number,jdbcType=DECIMAL},
+      money = #{record.money,jdbcType=DECIMAL},
+      taxRate = #{record.taxrate,jdbcType=DECIMAL},
+      tax = #{record.tax,jdbcType=DECIMAL},
+      gather_date = #{record.gatherDate,jdbcType=DATE},
+      invoice_number = #{record.invoiceNumber,jdbcType=VARCHAR},
+      payee = #{record.payee,jdbcType=VARCHAR},
+      expense = #{record.expense,jdbcType=BIT},
+      valid = #{record.valid,jdbcType=BIT},
+      ts = #{record.ts,jdbcType=TIMESTAMP},
+      unit = #{record.unit,jdbcType=VARCHAR},
+      imagesystemtype = #{record.imagesystemtype,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ybz.entity.NodeGatherWithBLOBs" >
+    update node_gather
+    <set >
+      <if test="pk != null" >
+        pk = #{pk,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="materiel != null" >
+        materiel = #{materiel,jdbcType=VARCHAR},
+      </if>
+      <if test="unitprice != null" >
+        unitprice = #{unitprice,jdbcType=DECIMAL},
+      </if>
+      <if test="number != null" >
+        number = #{number,jdbcType=DECIMAL},
+      </if>
+      <if test="money != null" >
+        money = #{money,jdbcType=DECIMAL},
+      </if>
+      <if test="taxrate != null" >
+        taxRate = #{taxrate,jdbcType=DECIMAL},
+      </if>
+      <if test="tax != null" >
+        tax = #{tax,jdbcType=DECIMAL},
+      </if>
+      <if test="gatherDate != null" >
+        gather_date = #{gatherDate,jdbcType=DATE},
+      </if>
+      <if test="invoiceNumber != null" >
+        invoice_number = #{invoiceNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="payee != null" >
+        payee = #{payee,jdbcType=VARCHAR},
+      </if>
+      <if test="expense != null" >
+        expense = #{expense,jdbcType=BIT},
+      </if>
+      <if test="valid != null" >
+        valid = #{valid,jdbcType=BIT},
+      </if>
+      <if test="ts != null" >
+        ts = #{ts,jdbcType=TIMESTAMP},
+      </if>
+      <if test="unit != null" >
+        unit = #{unit,jdbcType=VARCHAR},
+      </if>
+      <if test="imagesystemtype != null" >
+        imagesystemtype = #{imagesystemtype,jdbcType=VARCHAR},
+      </if>
+      <if test="note != null" >
+        note = #{note,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="tagContent != null" >
+        tag_content = #{tagContent,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="filepath != null" >
+        filepath = #{filepath,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.ybz.entity.NodeGatherWithBLOBs" >
+    update node_gather
+    set pk = #{pk,jdbcType=VARCHAR},
+      user_id = #{userId,jdbcType=VARCHAR},
+      materiel = #{materiel,jdbcType=VARCHAR},
+      unitprice = #{unitprice,jdbcType=DECIMAL},
+      number = #{number,jdbcType=DECIMAL},
+      money = #{money,jdbcType=DECIMAL},
+      taxRate = #{taxrate,jdbcType=DECIMAL},
+      tax = #{tax,jdbcType=DECIMAL},
+      gather_date = #{gatherDate,jdbcType=DATE},
+      invoice_number = #{invoiceNumber,jdbcType=VARCHAR},
+      payee = #{payee,jdbcType=VARCHAR},
+      expense = #{expense,jdbcType=BIT},
+      valid = #{valid,jdbcType=BIT},
+      ts = #{ts,jdbcType=TIMESTAMP},
+      unit = #{unit,jdbcType=VARCHAR},
+      imagesystemtype = #{imagesystemtype,jdbcType=VARCHAR},
+      note = #{note,jdbcType=LONGVARCHAR},
+      tag_content = #{tagContent,jdbcType=LONGVARCHAR},
+      filepath = #{filepath,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ybz.entity.NodeGather" >
+    update node_gather
+    set pk = #{pk,jdbcType=VARCHAR},
+      user_id = #{userId,jdbcType=VARCHAR},
+      materiel = #{materiel,jdbcType=VARCHAR},
+      unitprice = #{unitprice,jdbcType=DECIMAL},
+      number = #{number,jdbcType=DECIMAL},
+      money = #{money,jdbcType=DECIMAL},
+      taxRate = #{taxrate,jdbcType=DECIMAL},
+      tax = #{tax,jdbcType=DECIMAL},
+      gather_date = #{gatherDate,jdbcType=DATE},
+      invoice_number = #{invoiceNumber,jdbcType=VARCHAR},
+      payee = #{payee,jdbcType=VARCHAR},
+      expense = #{expense,jdbcType=BIT},
+      valid = #{valid,jdbcType=BIT},
+      ts = #{ts,jdbcType=TIMESTAMP},
+      unit = #{unit,jdbcType=VARCHAR},
+      imagesystemtype = #{imagesystemtype,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <select id="queryMoneyByDate" resultType="java.lang.Double" parameterType="com.ybz.entity.NodeGatherExample">
+    select SUM(money) from node_gather
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause"/>
+    </if>
+  </select>
+</mapper>

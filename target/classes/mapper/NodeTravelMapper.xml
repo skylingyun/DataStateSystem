@@ -1,0 +1,473 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ybz.dao.NodeTravelMapper">
+    <resultMap id="BaseResultMap" type="com.ybz.entity.NodeTravel">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="pk" property="pk" jdbcType="VARCHAR"/>
+        <result column="user_id" property="userId" jdbcType="VARCHAR"/>
+        <result column="money" property="money" jdbcType="DOUBLE"/>
+        <result column="from_city" property="fromCity" jdbcType="VARCHAR"/>
+        <result column="to_city" property="toCity" jdbcType="VARCHAR"/>
+        <result column="travel_date" property="travelDate" jdbcType="DATE"/>
+        <result column="travel_way" property="travelWay" jdbcType="VARCHAR"/>
+        <result column="expense" property="expense" jdbcType="BIT"/>
+        <result column="valid" property="valid" jdbcType="BIT"/>
+        <result column="ts" property="ts" jdbcType="TIMESTAMP"/>
+        <result column="expensetype" property="expensetype" jdbcType="VARCHAR"/>
+        <result column="imagesystemtype" property="imagesystemtype" jdbcType="VARCHAR"/>
+        <result column="category" property="category" jdbcType="VARCHAR"/>
+    </resultMap>
+    <resultMap id="ResultMapWithBLOBs" type="com.ybz.entity.NodeTravelWithBLOBs" extends="BaseResultMap">
+        <result column="note" property="note" jdbcType="LONGVARCHAR"/>
+        <result column="filepath" property="filepath" jdbcType="LONGVARCHAR"/>
+        <result column="tag_content" property="tagContent" jdbcType="LONGVARCHAR"/>
+    </resultMap>
+    <sql id="Example_Where_Clause">
+        <where>
+            <foreach collection="oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" suffix=")" prefixOverrides="and">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach collection="criterion.value" item="listItem" open="(" close=")"
+                                             separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Update_By_Example_Where_Clause">
+        <where>
+            <foreach collection="example.oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" suffix=")" prefixOverrides="and">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach collection="criterion.value" item="listItem" open="(" close=")"
+                                             separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Base_Column_List">
+    id, pk, user_id, money, from_city, to_city, travel_date, travel_way, expense, valid, 
+    ts, expensetype, imagesystemtype, category
+  </sql>
+    <sql id="Blob_Column_List">
+    note, filepath, tag_content
+  </sql>
+    <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs"
+            parameterType="com.ybz.entity.NodeTravelExample">
+        select
+        <if test="distinct">
+            distinct
+        </if>
+        <include refid="Base_Column_List"/>
+        ,
+        <include refid="Blob_Column_List"/>
+        from node_travel
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+        <if test="orderByClause != null">
+            order by ${orderByClause}
+        </if>
+    </select>
+    <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.ybz.entity.NodeTravelExample">
+        select
+        <if test="distinct">
+            distinct
+        </if>
+        <include refid="Base_Column_List"/>
+        from node_travel
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+        <if test="orderByClause != null">
+            order by ${orderByClause}
+        </if>
+        <if test="startRow != null and pageSize != null and pageSize != 0">
+            limit #{startRow},#{pageSize}
+        </if>
+    </select>
+    <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        ,
+        <include refid="Blob_Column_List"/>
+        from node_travel
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from node_travel
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+    <delete id="deleteByExample" parameterType="com.ybz.entity.NodeTravelExample">
+        delete from node_travel
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+    </delete>
+    <insert id="insert" parameterType="com.ybz.entity.NodeTravelWithBLOBs">
+    insert into node_travel (id, pk, user_id, 
+      money, from_city, to_city, 
+      travel_date, travel_way, expense, 
+      valid, ts, expensetype, 
+      imagesystemtype, category, note, 
+      filepath, tag_content)
+    values (#{id,jdbcType=INTEGER}, #{pk,jdbcType=VARCHAR}, #{userId,jdbcType=VARCHAR}, 
+      #{money,jdbcType=DOUBLE}, #{fromCity,jdbcType=VARCHAR}, #{toCity,jdbcType=VARCHAR}, 
+      #{travelDate,jdbcType=DATE}, #{travelWay,jdbcType=VARCHAR}, #{expense,jdbcType=BIT}, 
+      #{valid,jdbcType=BIT}, #{ts,jdbcType=TIMESTAMP}, #{expensetype,jdbcType=VARCHAR}, 
+      #{imagesystemtype,jdbcType=VARCHAR}, #{category,jdbcType=VARCHAR}, #{note,jdbcType=LONGVARCHAR}, 
+      #{filepath,jdbcType=LONGVARCHAR}, #{tagContent,jdbcType=LONGVARCHAR})
+  </insert>
+    <insert id="insertSelective" parameterType="com.ybz.entity.NodeTravelWithBLOBs">
+        insert into node_travel
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="pk != null">
+                pk,
+            </if>
+            <if test="userId != null">
+                user_id,
+            </if>
+            <if test="money != null">
+                money,
+            </if>
+            <if test="fromCity != null">
+                from_city,
+            </if>
+            <if test="toCity != null">
+                to_city,
+            </if>
+            <if test="travelDate != null">
+                travel_date,
+            </if>
+            <if test="travelWay != null">
+                travel_way,
+            </if>
+            <if test="expense != null">
+                expense,
+            </if>
+            <if test="valid != null">
+                valid,
+            </if>
+            <if test="ts != null">
+                ts,
+            </if>
+            <if test="expensetype != null">
+                expensetype,
+            </if>
+            <if test="imagesystemtype != null">
+                imagesystemtype,
+            </if>
+            <if test="category != null">
+                category,
+            </if>
+            <if test="note != null">
+                note,
+            </if>
+            <if test="filepath != null">
+                filepath,
+            </if>
+            <if test="tagContent != null">
+                tag_content,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="pk != null">
+                #{pk,jdbcType=VARCHAR},
+            </if>
+            <if test="userId != null">
+                #{userId,jdbcType=VARCHAR},
+            </if>
+            <if test="money != null">
+                #{money,jdbcType=DOUBLE},
+            </if>
+            <if test="fromCity != null">
+                #{fromCity,jdbcType=VARCHAR},
+            </if>
+            <if test="toCity != null">
+                #{toCity,jdbcType=VARCHAR},
+            </if>
+            <if test="travelDate != null">
+                #{travelDate,jdbcType=DATE},
+            </if>
+            <if test="travelWay != null">
+                #{travelWay,jdbcType=VARCHAR},
+            </if>
+            <if test="expense != null">
+                #{expense,jdbcType=BIT},
+            </if>
+            <if test="valid != null">
+                #{valid,jdbcType=BIT},
+            </if>
+            <if test="ts != null">
+                #{ts,jdbcType=TIMESTAMP},
+            </if>
+            <if test="expensetype != null">
+                #{expensetype,jdbcType=VARCHAR},
+            </if>
+            <if test="imagesystemtype != null">
+                #{imagesystemtype,jdbcType=VARCHAR},
+            </if>
+            <if test="category != null">
+                #{category,jdbcType=VARCHAR},
+            </if>
+            <if test="note != null">
+                #{note,jdbcType=LONGVARCHAR},
+            </if>
+            <if test="filepath != null">
+                #{filepath,jdbcType=LONGVARCHAR},
+            </if>
+            <if test="tagContent != null">
+                #{tagContent,jdbcType=LONGVARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <select id="countByExample" parameterType="com.ybz.entity.NodeTravelExample" resultType="java.lang.Integer">
+        select count(*) from node_travel
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+    </select>
+    <update id="updateByExampleSelective" parameterType="map">
+        update node_travel
+        <set>
+            <if test="record.id != null">
+                id = #{record.id,jdbcType=INTEGER},
+            </if>
+            <if test="record.pk != null">
+                pk = #{record.pk,jdbcType=VARCHAR},
+            </if>
+            <if test="record.userId != null">
+                user_id = #{record.userId,jdbcType=VARCHAR},
+            </if>
+            <if test="record.money != null">
+                money = #{record.money,jdbcType=DOUBLE},
+            </if>
+            <if test="record.fromCity != null">
+                from_city = #{record.fromCity,jdbcType=VARCHAR},
+            </if>
+            <if test="record.toCity != null">
+                to_city = #{record.toCity,jdbcType=VARCHAR},
+            </if>
+            <if test="record.travelDate != null">
+                travel_date = #{record.travelDate,jdbcType=DATE},
+            </if>
+            <if test="record.travelWay != null">
+                travel_way = #{record.travelWay,jdbcType=VARCHAR},
+            </if>
+            <if test="record.expense != null">
+                expense = #{record.expense,jdbcType=BIT},
+            </if>
+            <if test="record.valid != null">
+                valid = #{record.valid,jdbcType=BIT},
+            </if>
+            <if test="record.ts != null">
+                ts = #{record.ts,jdbcType=TIMESTAMP},
+            </if>
+            <if test="record.expensetype != null">
+                expensetype = #{record.expensetype,jdbcType=VARCHAR},
+            </if>
+            <if test="record.imagesystemtype != null">
+                imagesystemtype = #{record.imagesystemtype,jdbcType=VARCHAR},
+            </if>
+            <if test="record.category != null">
+                category = #{record.category,jdbcType=VARCHAR},
+            </if>
+            <if test="record.note != null">
+                note = #{record.note,jdbcType=LONGVARCHAR},
+            </if>
+            <if test="record.filepath != null">
+                filepath = #{record.filepath,jdbcType=LONGVARCHAR},
+            </if>
+            <if test="record.tagContent != null">
+                tag_content = #{record.tagContent,jdbcType=LONGVARCHAR},
+            </if>
+        </set>
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause"/>
+        </if>
+    </update>
+    <update id="updateByExampleWithBLOBs" parameterType="map">
+        update node_travel
+        set id = #{record.id,jdbcType=INTEGER},
+        pk = #{record.pk,jdbcType=VARCHAR},
+        user_id = #{record.userId,jdbcType=VARCHAR},
+        money = #{record.money,jdbcType=DOUBLE},
+        from_city = #{record.fromCity,jdbcType=VARCHAR},
+        to_city = #{record.toCity,jdbcType=VARCHAR},
+        travel_date = #{record.travelDate,jdbcType=DATE},
+        travel_way = #{record.travelWay,jdbcType=VARCHAR},
+        expense = #{record.expense,jdbcType=BIT},
+        valid = #{record.valid,jdbcType=BIT},
+        ts = #{record.ts,jdbcType=TIMESTAMP},
+        expensetype = #{record.expensetype,jdbcType=VARCHAR},
+        imagesystemtype = #{record.imagesystemtype,jdbcType=VARCHAR},
+        category = #{record.category,jdbcType=VARCHAR},
+        note = #{record.note,jdbcType=LONGVARCHAR},
+        filepath = #{record.filepath,jdbcType=LONGVARCHAR},
+        tag_content = #{record.tagContent,jdbcType=LONGVARCHAR}
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause"/>
+        </if>
+    </update>
+    <update id="updateByExample" parameterType="map">
+        update node_travel
+        set id = #{record.id,jdbcType=INTEGER},
+        pk = #{record.pk,jdbcType=VARCHAR},
+        user_id = #{record.userId,jdbcType=VARCHAR},
+        money = #{record.money,jdbcType=DOUBLE},
+        from_city = #{record.fromCity,jdbcType=VARCHAR},
+        to_city = #{record.toCity,jdbcType=VARCHAR},
+        travel_date = #{record.travelDate,jdbcType=DATE},
+        travel_way = #{record.travelWay,jdbcType=VARCHAR},
+        expense = #{record.expense,jdbcType=BIT},
+        valid = #{record.valid,jdbcType=BIT},
+        ts = #{record.ts,jdbcType=TIMESTAMP},
+        expensetype = #{record.expensetype,jdbcType=VARCHAR},
+        imagesystemtype = #{record.imagesystemtype,jdbcType=VARCHAR},
+        category = #{record.category,jdbcType=VARCHAR}
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause"/>
+        </if>
+    </update>
+    <update id="updateByPrimaryKeySelective" parameterType="com.ybz.entity.NodeTravelWithBLOBs">
+        update node_travel
+        <set>
+            <if test="pk != null">
+                pk = #{pk,jdbcType=VARCHAR},
+            </if>
+            <if test="userId != null">
+                user_id = #{userId,jdbcType=VARCHAR},
+            </if>
+            <if test="money != null">
+                money = #{money,jdbcType=DOUBLE},
+            </if>
+            <if test="fromCity != null">
+                from_city = #{fromCity,jdbcType=VARCHAR},
+            </if>
+            <if test="toCity != null">
+                to_city = #{toCity,jdbcType=VARCHAR},
+            </if>
+            <if test="travelDate != null">
+                travel_date = #{travelDate,jdbcType=DATE},
+            </if>
+            <if test="travelWay != null">
+                travel_way = #{travelWay,jdbcType=VARCHAR},
+            </if>
+            <if test="expense != null">
+                expense = #{expense,jdbcType=BIT},
+            </if>
+            <if test="valid != null">
+                valid = #{valid,jdbcType=BIT},
+            </if>
+            <if test="ts != null">
+                ts = #{ts,jdbcType=TIMESTAMP},
+            </if>
+            <if test="expensetype != null">
+                expensetype = #{expensetype,jdbcType=VARCHAR},
+            </if>
+            <if test="imagesystemtype != null">
+                imagesystemtype = #{imagesystemtype,jdbcType=VARCHAR},
+            </if>
+            <if test="category != null">
+                category = #{category,jdbcType=VARCHAR},
+            </if>
+            <if test="note != null">
+                note = #{note,jdbcType=LONGVARCHAR},
+            </if>
+            <if test="filepath != null">
+                filepath = #{filepath,jdbcType=LONGVARCHAR},
+            </if>
+            <if test="tagContent != null">
+                tag_content = #{tagContent,jdbcType=LONGVARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.ybz.entity.NodeTravelWithBLOBs">
+    update node_travel
+    set pk = #{pk,jdbcType=VARCHAR},
+      user_id = #{userId,jdbcType=VARCHAR},
+      money = #{money,jdbcType=DOUBLE},
+      from_city = #{fromCity,jdbcType=VARCHAR},
+      to_city = #{toCity,jdbcType=VARCHAR},
+      travel_date = #{travelDate,jdbcType=DATE},
+      travel_way = #{travelWay,jdbcType=VARCHAR},
+      expense = #{expense,jdbcType=BIT},
+      valid = #{valid,jdbcType=BIT},
+      ts = #{ts,jdbcType=TIMESTAMP},
+      expensetype = #{expensetype,jdbcType=VARCHAR},
+      imagesystemtype = #{imagesystemtype,jdbcType=VARCHAR},
+      category = #{category,jdbcType=VARCHAR},
+      note = #{note,jdbcType=LONGVARCHAR},
+      filepath = #{filepath,jdbcType=LONGVARCHAR},
+      tag_content = #{tagContent,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+    <update id="updateByPrimaryKey" parameterType="com.ybz.entity.NodeTravel">
+    update node_travel
+    set pk = #{pk,jdbcType=VARCHAR},
+      user_id = #{userId,jdbcType=VARCHAR},
+      money = #{money,jdbcType=DOUBLE},
+      from_city = #{fromCity,jdbcType=VARCHAR},
+      to_city = #{toCity,jdbcType=VARCHAR},
+      travel_date = #{travelDate,jdbcType=DATE},
+      travel_way = #{travelWay,jdbcType=VARCHAR},
+      expense = #{expense,jdbcType=BIT},
+      valid = #{valid,jdbcType=BIT},
+      ts = #{ts,jdbcType=TIMESTAMP},
+      expensetype = #{expensetype,jdbcType=VARCHAR},
+      imagesystemtype = #{imagesystemtype,jdbcType=VARCHAR},
+      category = #{category,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+    <select id="queryMoneyByDate" resultType="java.lang.Double" parameterType="com.ybz.entity.NodeTravelExample">
+        select SUM(money) from node_travel
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+    </select>
+</mapper>

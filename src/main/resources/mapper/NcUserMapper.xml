@@ -1,0 +1,398 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ybz.dao.NcUserMapper" >
+  <resultMap id="BaseResultMap" type="com.ybz.entity.NcUser" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="pk" property="pk" jdbcType="VARCHAR" />
+    <result column="userid" property="userid" jdbcType="VARCHAR" />
+    <result column="parent" property="parent" jdbcType="VARCHAR" />
+    <result column="usercode" property="usercode" jdbcType="VARCHAR" />
+    <result column="userpk" property="userpk" jdbcType="VARCHAR" />
+    <result column="password" property="password" jdbcType="VARCHAR" />
+    <result column="valid" property="valid" jdbcType="BIT" />
+    <result column="ts" property="ts" jdbcType="TIMESTAMP" />
+    <result column="deptpk" property="deptpk" jdbcType="VARCHAR" />
+    <result column="deptname" property="deptname" jdbcType="VARCHAR" />
+    <result column="orgpk" property="orgpk" jdbcType="VARCHAR" />
+    <result column="orgname" property="orgname" jdbcType="VARCHAR" />
+    <result column="pcode" property="pcode" jdbcType="VARCHAR" />
+    <result column="passengerid" property="passengerid" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, pk, userid, parent, usercode, userpk, password, valid, ts, deptpk, deptname, 
+    orgpk, orgname, pcode, passengerid
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.ybz.entity.NcUserExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from nc_user
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from nc_user
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from nc_user
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.ybz.entity.NcUserExample" >
+    delete from nc_user
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.ybz.entity.NcUser" >
+    insert into nc_user (id, pk, userid, 
+      parent, usercode, userpk, 
+      password, valid, ts, 
+      deptpk, deptname, orgpk, 
+      orgname, pcode, passengerid, 
+      fatherdeptpk, fatherdeptname)
+    values (#{id,jdbcType=INTEGER}, #{pk,jdbcType=VARCHAR}, #{userid,jdbcType=VARCHAR}, 
+      #{parent,jdbcType=VARCHAR}, #{usercode,jdbcType=VARCHAR}, #{userpk,jdbcType=VARCHAR}, 
+      #{password,jdbcType=VARCHAR}, #{valid,jdbcType=BIT}, #{ts,jdbcType=TIMESTAMP}, 
+      #{deptpk,jdbcType=VARCHAR}, #{deptname,jdbcType=VARCHAR}, #{orgpk,jdbcType=VARCHAR}, 
+      #{orgname,jdbcType=VARCHAR}, #{pcode,jdbcType=VARCHAR}, #{passengerid,jdbcType=VARCHAR}, 
+      #{fatherdeptpk,jdbcType=VARCHAR}, #{fatherdeptname,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ybz.entity.NcUser" >
+    insert into nc_user
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="pk != null" >
+        pk,
+      </if>
+      <if test="userid != null" >
+        userid,
+      </if>
+      <if test="parent != null" >
+        parent,
+      </if>
+      <if test="usercode != null" >
+        usercode,
+      </if>
+      <if test="userpk != null" >
+        userpk,
+      </if>
+      <if test="password != null" >
+        password,
+      </if>
+      <if test="valid != null" >
+        valid,
+      </if>
+      <if test="ts != null" >
+        ts,
+      </if>
+      <if test="deptpk != null" >
+        deptpk,
+      </if>
+      <if test="deptname != null" >
+        deptname,
+      </if>
+      <if test="orgpk != null" >
+        orgpk,
+      </if>
+      <if test="orgname != null" >
+        orgname,
+      </if>
+      <if test="pcode != null" >
+        pcode,
+      </if>
+      <if test="passengerid != null" >
+        passengerid,
+      </if>
+      <if test="fatherdeptpk != null" >
+        fatherdeptpk,
+      </if>
+      <if test="fatherdeptname != null" >
+        fatherdeptname,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="pk != null" >
+        #{pk,jdbcType=VARCHAR},
+      </if>
+      <if test="userid != null" >
+        #{userid,jdbcType=VARCHAR},
+      </if>
+      <if test="parent != null" >
+        #{parent,jdbcType=VARCHAR},
+      </if>
+      <if test="usercode != null" >
+        #{usercode,jdbcType=VARCHAR},
+      </if>
+      <if test="userpk != null" >
+        #{userpk,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null" >
+        #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="valid != null" >
+        #{valid,jdbcType=BIT},
+      </if>
+      <if test="ts != null" >
+        #{ts,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deptpk != null" >
+        #{deptpk,jdbcType=VARCHAR},
+      </if>
+      <if test="deptname != null" >
+        #{deptname,jdbcType=VARCHAR},
+      </if>
+      <if test="orgpk != null" >
+        #{orgpk,jdbcType=VARCHAR},
+      </if>
+      <if test="orgname != null" >
+        #{orgname,jdbcType=VARCHAR},
+      </if>
+      <if test="pcode != null" >
+        #{pcode,jdbcType=VARCHAR},
+      </if>
+      <if test="passengerid != null" >
+        #{passengerid,jdbcType=VARCHAR},
+      </if>
+      <if test="fatherdeptpk != null" >
+        #{fatherdeptpk,jdbcType=VARCHAR},
+      </if>
+      <if test="fatherdeptname != null" >
+        #{fatherdeptname,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.ybz.entity.NcUserExample" resultType="java.lang.Integer" >
+    select count(*) from nc_user
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update nc_user
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.pk != null" >
+        pk = #{record.pk,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userid != null" >
+        userid = #{record.userid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.parent != null" >
+        parent = #{record.parent,jdbcType=VARCHAR},
+      </if>
+      <if test="record.usercode != null" >
+        usercode = #{record.usercode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userpk != null" >
+        userpk = #{record.userpk,jdbcType=VARCHAR},
+      </if>
+      <if test="record.password != null" >
+        password = #{record.password,jdbcType=VARCHAR},
+      </if>
+      <if test="record.valid != null" >
+        valid = #{record.valid,jdbcType=BIT},
+      </if>
+      <if test="record.ts != null" >
+        ts = #{record.ts,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.deptpk != null" >
+        deptpk = #{record.deptpk,jdbcType=VARCHAR},
+      </if>
+      <if test="record.deptname != null" >
+        deptname = #{record.deptname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.orgpk != null" >
+        orgpk = #{record.orgpk,jdbcType=VARCHAR},
+      </if>
+      <if test="record.orgname != null" >
+        orgname = #{record.orgname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.pcode != null" >
+        pcode = #{record.pcode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.passengerid != null" >
+        passengerid = #{record.passengerid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.fatherdeptpk != null" >
+        fatherdeptpk = #{record.fatherdeptpk,jdbcType=VARCHAR},
+      </if>
+      <if test="record.fatherdeptname != null" >
+        fatherdeptname = #{record.fatherdeptname,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update nc_user
+    set id = #{record.id,jdbcType=INTEGER},
+      pk = #{record.pk,jdbcType=VARCHAR},
+      userid = #{record.userid,jdbcType=VARCHAR},
+      parent = #{record.parent,jdbcType=VARCHAR},
+      usercode = #{record.usercode,jdbcType=VARCHAR},
+      userpk = #{record.userpk,jdbcType=VARCHAR},
+      password = #{record.password,jdbcType=VARCHAR},
+      valid = #{record.valid,jdbcType=BIT},
+      ts = #{record.ts,jdbcType=TIMESTAMP},
+      deptpk = #{record.deptpk,jdbcType=VARCHAR},
+      deptname = #{record.deptname,jdbcType=VARCHAR},
+      orgpk = #{record.orgpk,jdbcType=VARCHAR},
+      orgname = #{record.orgname,jdbcType=VARCHAR},
+      pcode = #{record.pcode,jdbcType=VARCHAR},
+      passengerid = #{record.passengerid,jdbcType=VARCHAR},
+      fatherdeptpk = #{record.fatherdeptpk,jdbcType=VARCHAR},
+      fatherdeptname = #{record.fatherdeptname,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ybz.entity.NcUser" >
+    update nc_user
+    <set >
+      <if test="pk != null" >
+        pk = #{pk,jdbcType=VARCHAR},
+      </if>
+      <if test="userid != null" >
+        userid = #{userid,jdbcType=VARCHAR},
+      </if>
+      <if test="parent != null" >
+        parent = #{parent,jdbcType=VARCHAR},
+      </if>
+      <if test="usercode != null" >
+        usercode = #{usercode,jdbcType=VARCHAR},
+      </if>
+      <if test="userpk != null" >
+        userpk = #{userpk,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null" >
+        password = #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="valid != null" >
+        valid = #{valid,jdbcType=BIT},
+      </if>
+      <if test="ts != null" >
+        ts = #{ts,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deptpk != null" >
+        deptpk = #{deptpk,jdbcType=VARCHAR},
+      </if>
+      <if test="deptname != null" >
+        deptname = #{deptname,jdbcType=VARCHAR},
+      </if>
+      <if test="orgpk != null" >
+        orgpk = #{orgpk,jdbcType=VARCHAR},
+      </if>
+      <if test="orgname != null" >
+        orgname = #{orgname,jdbcType=VARCHAR},
+      </if>
+      <if test="pcode != null" >
+        pcode = #{pcode,jdbcType=VARCHAR},
+      </if>
+      <if test="passengerid != null" >
+        passengerid = #{passengerid,jdbcType=VARCHAR},
+      </if>
+      <if test="fatherdeptpk != null" >
+        fatherdeptpk = #{fatherdeptpk,jdbcType=VARCHAR},
+      </if>
+      <if test="fatherdeptname != null" >
+        fatherdeptname = #{fatherdeptname,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ybz.entity.NcUser" >
+    update nc_user
+    set pk = #{pk,jdbcType=VARCHAR},
+      userid = #{userid,jdbcType=VARCHAR},
+      parent = #{parent,jdbcType=VARCHAR},
+      usercode = #{usercode,jdbcType=VARCHAR},
+      userpk = #{userpk,jdbcType=VARCHAR},
+      password = #{password,jdbcType=VARCHAR},
+      valid = #{valid,jdbcType=BIT},
+      ts = #{ts,jdbcType=TIMESTAMP},
+      deptpk = #{deptpk,jdbcType=VARCHAR},
+      deptname = #{deptname,jdbcType=VARCHAR},
+      orgpk = #{orgpk,jdbcType=VARCHAR},
+      orgname = #{orgname,jdbcType=VARCHAR},
+      pcode = #{pcode,jdbcType=VARCHAR},
+      passengerid = #{passengerid,jdbcType=VARCHAR},
+      fatherdeptpk = #{fatherdeptpk,jdbcType=VARCHAR},
+      fatherdeptname = #{fatherdeptname,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

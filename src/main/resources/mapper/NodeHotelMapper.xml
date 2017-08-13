@@ -1,0 +1,520 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ybz.dao.NodeHotelMapper" >
+  <resultMap id="BaseResultMap" type="com.ybz.entity.NodeHotel" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="pk" property="pk" jdbcType="VARCHAR" />
+    <result column="user_id" property="userId" jdbcType="VARCHAR" />
+    <result column="money" property="money" jdbcType="DOUBLE" />
+    <result column="city" property="city" jdbcType="VARCHAR" />
+    <result column="start_date" property="startDate" jdbcType="DATE" />
+    <result column="end_date" property="endDate" jdbcType="DATE" />
+    <result column="hotel" property="hotel" jdbcType="VARCHAR" />
+    <result column="expense" property="expense" jdbcType="BIT" />
+    <result column="valid" property="valid" jdbcType="BIT" />
+    <result column="ts" property="ts" jdbcType="TIMESTAMP" />
+    <result column="taxrate" property="taxrate" jdbcType="DOUBLE" />
+    <result column="includtax" property="includtax" jdbcType="DOUBLE" />
+    <result column="nottax" property="nottax" jdbcType="DOUBLE" />
+    <result column="invoicenum" property="invoicenum" jdbcType="VARCHAR" />
+    <result column="demo1" property="demo1" jdbcType="VARCHAR" />
+    <result column="imagesystemtype" property="imagesystemtype" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.ybz.entity.NodeHotelWithBLOBs" extends="BaseResultMap" >
+    <result column="note" property="note" jdbcType="LONGVARCHAR" />
+    <result column="filepath" property="filepath" jdbcType="LONGVARCHAR" />
+    <result column="tag_content" property="tagContent" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, pk, user_id, money, city, start_date, end_date, hotel, expense, valid, ts, taxrate, 
+    includtax, nottax, invoicenum, demo1, imagesystemtype
+  </sql>
+  <sql id="Blob_Column_List" >
+    note, filepath, tag_content
+  </sql>
+  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.ybz.entity.NodeHotelExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from node_hotel
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.ybz.entity.NodeHotelExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from node_hotel
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from node_hotel
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from node_hotel
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.ybz.entity.NodeHotelExample" >
+    delete from node_hotel
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.ybz.entity.NodeHotelWithBLOBs" >
+    insert into node_hotel (id, pk, user_id, 
+      money, city, start_date, 
+      end_date, hotel, expense, valid, 
+      ts, taxrate, includtax, 
+      nottax, invoicenum, demo1, 
+      imagesystemtype, note, filepath, 
+      tag_content)
+    values (#{id,jdbcType=INTEGER}, #{pk,jdbcType=VARCHAR}, #{userId,jdbcType=VARCHAR}, 
+      #{money,jdbcType=DOUBLE}, #{city,jdbcType=VARCHAR}, #{startDate,jdbcType=DATE}, 
+      #{endDate,jdbcType=DATE}, #{hotel,jdbcType=VARCHAR}, #{expense,jdbcType=BIT}, #{valid,jdbcType=BIT}, 
+      #{ts,jdbcType=TIMESTAMP}, #{taxrate,jdbcType=DOUBLE}, #{includtax,jdbcType=DOUBLE}, 
+      #{nottax,jdbcType=DOUBLE}, #{invoicenum,jdbcType=VARCHAR}, #{demo1,jdbcType=VARCHAR}, 
+      #{imagesystemtype,jdbcType=VARCHAR}, #{note,jdbcType=LONGVARCHAR}, #{filepath,jdbcType=LONGVARCHAR}, 
+      #{tagContent,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ybz.entity.NodeHotelWithBLOBs" >
+    insert into node_hotel
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="pk != null" >
+        pk,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="money != null" >
+        money,
+      </if>
+      <if test="city != null" >
+        city,
+      </if>
+      <if test="startDate != null" >
+        start_date,
+      </if>
+      <if test="endDate != null" >
+        end_date,
+      </if>
+      <if test="hotel != null" >
+        hotel,
+      </if>
+      <if test="expense != null" >
+        expense,
+      </if>
+      <if test="valid != null" >
+        valid,
+      </if>
+      <if test="ts != null" >
+        ts,
+      </if>
+      <if test="taxrate != null" >
+        taxrate,
+      </if>
+      <if test="includtax != null" >
+        includtax,
+      </if>
+      <if test="nottax != null" >
+        nottax,
+      </if>
+      <if test="invoicenum != null" >
+        invoicenum,
+      </if>
+      <if test="demo1 != null" >
+        demo1,
+      </if>
+      <if test="imagesystemtype != null" >
+        imagesystemtype,
+      </if>
+      <if test="note != null" >
+        note,
+      </if>
+      <if test="filepath != null" >
+        filepath,
+      </if>
+      <if test="tagContent != null" >
+        tag_content,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="pk != null" >
+        #{pk,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="money != null" >
+        #{money,jdbcType=DOUBLE},
+      </if>
+      <if test="city != null" >
+        #{city,jdbcType=VARCHAR},
+      </if>
+      <if test="startDate != null" >
+        #{startDate,jdbcType=DATE},
+      </if>
+      <if test="endDate != null" >
+        #{endDate,jdbcType=DATE},
+      </if>
+      <if test="hotel != null" >
+        #{hotel,jdbcType=VARCHAR},
+      </if>
+      <if test="expense != null" >
+        #{expense,jdbcType=BIT},
+      </if>
+      <if test="valid != null" >
+        #{valid,jdbcType=BIT},
+      </if>
+      <if test="ts != null" >
+        #{ts,jdbcType=TIMESTAMP},
+      </if>
+      <if test="taxrate != null" >
+        #{taxrate,jdbcType=DOUBLE},
+      </if>
+      <if test="includtax != null" >
+        #{includtax,jdbcType=DOUBLE},
+      </if>
+      <if test="nottax != null" >
+        #{nottax,jdbcType=DOUBLE},
+      </if>
+      <if test="invoicenum != null" >
+        #{invoicenum,jdbcType=VARCHAR},
+      </if>
+      <if test="demo1 != null" >
+        #{demo1,jdbcType=VARCHAR},
+      </if>
+      <if test="imagesystemtype != null" >
+        #{imagesystemtype,jdbcType=VARCHAR},
+      </if>
+      <if test="note != null" >
+        #{note,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="filepath != null" >
+        #{filepath,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="tagContent != null" >
+        #{tagContent,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.ybz.entity.NodeHotelExample" resultType="java.lang.Integer" >
+    select count(*) from node_hotel
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update node_hotel
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.pk != null" >
+        pk = #{record.pk,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userId != null" >
+        user_id = #{record.userId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.money != null" >
+        money = #{record.money,jdbcType=DOUBLE},
+      </if>
+      <if test="record.city != null" >
+        city = #{record.city,jdbcType=VARCHAR},
+      </if>
+      <if test="record.startDate != null" >
+        start_date = #{record.startDate,jdbcType=DATE},
+      </if>
+      <if test="record.endDate != null" >
+        end_date = #{record.endDate,jdbcType=DATE},
+      </if>
+      <if test="record.hotel != null" >
+        hotel = #{record.hotel,jdbcType=VARCHAR},
+      </if>
+      <if test="record.expense != null" >
+        expense = #{record.expense,jdbcType=BIT},
+      </if>
+      <if test="record.valid != null" >
+        valid = #{record.valid,jdbcType=BIT},
+      </if>
+      <if test="record.ts != null" >
+        ts = #{record.ts,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.taxrate != null" >
+        taxrate = #{record.taxrate,jdbcType=DOUBLE},
+      </if>
+      <if test="record.includtax != null" >
+        includtax = #{record.includtax,jdbcType=DOUBLE},
+      </if>
+      <if test="record.nottax != null" >
+        nottax = #{record.nottax,jdbcType=DOUBLE},
+      </if>
+      <if test="record.invoicenum != null" >
+        invoicenum = #{record.invoicenum,jdbcType=VARCHAR},
+      </if>
+      <if test="record.demo1 != null" >
+        demo1 = #{record.demo1,jdbcType=VARCHAR},
+      </if>
+      <if test="record.imagesystemtype != null" >
+        imagesystemtype = #{record.imagesystemtype,jdbcType=VARCHAR},
+      </if>
+      <if test="record.note != null" >
+        note = #{record.note,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.filepath != null" >
+        filepath = #{record.filepath,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.tagContent != null" >
+        tag_content = #{record.tagContent,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map" >
+    update node_hotel
+    set id = #{record.id,jdbcType=INTEGER},
+      pk = #{record.pk,jdbcType=VARCHAR},
+      user_id = #{record.userId,jdbcType=VARCHAR},
+      money = #{record.money,jdbcType=DOUBLE},
+      city = #{record.city,jdbcType=VARCHAR},
+      start_date = #{record.startDate,jdbcType=DATE},
+      end_date = #{record.endDate,jdbcType=DATE},
+      hotel = #{record.hotel,jdbcType=VARCHAR},
+      expense = #{record.expense,jdbcType=BIT},
+      valid = #{record.valid,jdbcType=BIT},
+      ts = #{record.ts,jdbcType=TIMESTAMP},
+      taxrate = #{record.taxrate,jdbcType=DOUBLE},
+      includtax = #{record.includtax,jdbcType=DOUBLE},
+      nottax = #{record.nottax,jdbcType=DOUBLE},
+      invoicenum = #{record.invoicenum,jdbcType=VARCHAR},
+      demo1 = #{record.demo1,jdbcType=VARCHAR},
+      imagesystemtype = #{record.imagesystemtype,jdbcType=VARCHAR},
+      note = #{record.note,jdbcType=LONGVARCHAR},
+      filepath = #{record.filepath,jdbcType=LONGVARCHAR},
+      tag_content = #{record.tagContent,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update node_hotel
+    set id = #{record.id,jdbcType=INTEGER},
+      pk = #{record.pk,jdbcType=VARCHAR},
+      user_id = #{record.userId,jdbcType=VARCHAR},
+      money = #{record.money,jdbcType=DOUBLE},
+      city = #{record.city,jdbcType=VARCHAR},
+      start_date = #{record.startDate,jdbcType=DATE},
+      end_date = #{record.endDate,jdbcType=DATE},
+      hotel = #{record.hotel,jdbcType=VARCHAR},
+      expense = #{record.expense,jdbcType=BIT},
+      valid = #{record.valid,jdbcType=BIT},
+      ts = #{record.ts,jdbcType=TIMESTAMP},
+      taxrate = #{record.taxrate,jdbcType=DOUBLE},
+      includtax = #{record.includtax,jdbcType=DOUBLE},
+      nottax = #{record.nottax,jdbcType=DOUBLE},
+      invoicenum = #{record.invoicenum,jdbcType=VARCHAR},
+      demo1 = #{record.demo1,jdbcType=VARCHAR},
+      imagesystemtype = #{record.imagesystemtype,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ybz.entity.NodeHotelWithBLOBs" >
+    update node_hotel
+    <set >
+      <if test="pk != null" >
+        pk = #{pk,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="money != null" >
+        money = #{money,jdbcType=DOUBLE},
+      </if>
+      <if test="city != null" >
+        city = #{city,jdbcType=VARCHAR},
+      </if>
+      <if test="startDate != null" >
+        start_date = #{startDate,jdbcType=DATE},
+      </if>
+      <if test="endDate != null" >
+        end_date = #{endDate,jdbcType=DATE},
+      </if>
+      <if test="hotel != null" >
+        hotel = #{hotel,jdbcType=VARCHAR},
+      </if>
+      <if test="expense != null" >
+        expense = #{expense,jdbcType=BIT},
+      </if>
+      <if test="valid != null" >
+        valid = #{valid,jdbcType=BIT},
+      </if>
+      <if test="ts != null" >
+        ts = #{ts,jdbcType=TIMESTAMP},
+      </if>
+      <if test="taxrate != null" >
+        taxrate = #{taxrate,jdbcType=DOUBLE},
+      </if>
+      <if test="includtax != null" >
+        includtax = #{includtax,jdbcType=DOUBLE},
+      </if>
+      <if test="nottax != null" >
+        nottax = #{nottax,jdbcType=DOUBLE},
+      </if>
+      <if test="invoicenum != null" >
+        invoicenum = #{invoicenum,jdbcType=VARCHAR},
+      </if>
+      <if test="demo1 != null" >
+        demo1 = #{demo1,jdbcType=VARCHAR},
+      </if>
+      <if test="imagesystemtype != null" >
+        imagesystemtype = #{imagesystemtype,jdbcType=VARCHAR},
+      </if>
+      <if test="note != null" >
+        note = #{note,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="filepath != null" >
+        filepath = #{filepath,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="tagContent != null" >
+        tag_content = #{tagContent,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.ybz.entity.NodeHotelWithBLOBs" >
+    update node_hotel
+    set pk = #{pk,jdbcType=VARCHAR},
+      user_id = #{userId,jdbcType=VARCHAR},
+      money = #{money,jdbcType=DOUBLE},
+      city = #{city,jdbcType=VARCHAR},
+      start_date = #{startDate,jdbcType=DATE},
+      end_date = #{endDate,jdbcType=DATE},
+      hotel = #{hotel,jdbcType=VARCHAR},
+      expense = #{expense,jdbcType=BIT},
+      valid = #{valid,jdbcType=BIT},
+      ts = #{ts,jdbcType=TIMESTAMP},
+      taxrate = #{taxrate,jdbcType=DOUBLE},
+      includtax = #{includtax,jdbcType=DOUBLE},
+      nottax = #{nottax,jdbcType=DOUBLE},
+      invoicenum = #{invoicenum,jdbcType=VARCHAR},
+      demo1 = #{demo1,jdbcType=VARCHAR},
+      imagesystemtype = #{imagesystemtype,jdbcType=VARCHAR},
+      note = #{note,jdbcType=LONGVARCHAR},
+      filepath = #{filepath,jdbcType=LONGVARCHAR},
+      tag_content = #{tagContent,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ybz.entity.NodeHotel" >
+    update node_hotel
+    set pk = #{pk,jdbcType=VARCHAR},
+      user_id = #{userId,jdbcType=VARCHAR},
+      money = #{money,jdbcType=DOUBLE},
+      city = #{city,jdbcType=VARCHAR},
+      start_date = #{startDate,jdbcType=DATE},
+      end_date = #{endDate,jdbcType=DATE},
+      hotel = #{hotel,jdbcType=VARCHAR},
+      expense = #{expense,jdbcType=BIT},
+      valid = #{valid,jdbcType=BIT},
+      ts = #{ts,jdbcType=TIMESTAMP},
+      taxrate = #{taxrate,jdbcType=DOUBLE},
+      includtax = #{includtax,jdbcType=DOUBLE},
+      nottax = #{nottax,jdbcType=DOUBLE},
+      invoicenum = #{invoicenum,jdbcType=VARCHAR},
+      demo1 = #{demo1,jdbcType=VARCHAR},
+      imagesystemtype = #{imagesystemtype,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <select id="queryMoneyByDate" resultType="java.lang.Double" parameterType="com.ybz.entity.NodeHotelExample">
+    select SUM(money) from node_hotel
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause"/>
+    </if>
+  </select>
+</mapper>

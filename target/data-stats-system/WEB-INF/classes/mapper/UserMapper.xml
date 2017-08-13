@@ -1,0 +1,632 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ybz.dao.UserMapper">
+    <resultMap id="BaseResultMap" type="com.ybz.entity.User">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="userid" property="userid" jdbcType="VARCHAR"/>
+        <result column="user_name" property="userName" jdbcType="VARCHAR"/>
+        <result column="password" property="password" jdbcType="VARCHAR"/>
+        <result column="birthday" property="birthday" jdbcType="DATE"/>
+        <result column="registerdate" property="registerdate" jdbcType="TIMESTAMP"/>
+        <result column="location" property="location" jdbcType="VARCHAR"/>
+        <result column="company" property="company" jdbcType="VARCHAR"/>
+        <result column="email" property="email" jdbcType="VARCHAR"/>
+        <result column="phone" property="phone" jdbcType="VARCHAR"/>
+        <result column="telnum" property="telnum" jdbcType="VARCHAR"/>
+        <result column="avatar" property="avatar" jdbcType="VARCHAR"/>
+        <result column="association" property="association" jdbcType="VARCHAR"/>
+        <result column="deptpk" property="deptpk" jdbcType="VARCHAR"/>
+        <result column="deptname" property="deptname" jdbcType="VARCHAR"/>
+        <result column="user_code" property="userCode" jdbcType="VARCHAR"/>
+        <result column="ts" property="ts" jdbcType="TIMESTAMP"/>
+        <result column="dr" property="dr" jdbcType="BIT"/>
+        <result column="postpk" property="postpk" jdbcType="VARCHAR"/>
+        <result column="postname" property="postname" jdbcType="VARCHAR"/>
+        <result column="rankpk" property="rankpk" jdbcType="VARCHAR"/>
+        <result column="rankname" property="rankname" jdbcType="VARCHAR"/>
+        <result column="deptcode" property="deptcode" jdbcType="VARCHAR"/>
+    </resultMap>
+    <resultMap id="ResultMapWithBLOBs" type="com.ybz.entity.User" extends="BaseResultMap">
+        <result column="description" property="description" jdbcType="LONGVARCHAR"/>
+    </resultMap>
+
+    <!--<resultMap id="queryUserListByValidMap" type="com.ybz.entity.User">-->
+        <!--<id column="userid" property="userid" jdbcType="VARCHAR"/>-->
+        <!--<result column="user_name" property="userName" jdbcType="VARCHAR"/>-->
+        <!--<result column="password" property="password" jdbcType="VARCHAR"/>-->
+        <!--<result column="company" property="company" jdbcType="VARCHAR"/>-->
+        <!--<result column="email" property="email" jdbcType="VARCHAR"/>-->
+        <!--<result column="phone" property="phone" jdbcType="VARCHAR"/>-->
+        <!--<result column="deptname" property="deptname" jdbcType="VARCHAR"/>-->
+        <!--<result column="user_code" property="userCode" jdbcType="VARCHAR"/>-->
+        <!--<result column="ts" property="ts" jdbcType="TIMESTAMP"/>-->
+        <!--<collection property="ncUserList" javaType="java.util.List" ofType="com.ybz.entity.NcUser">-->
+            <!--<id column="id" property="id" jdbcType="INTEGER"/>-->
+            <!--<result column="userid" property="userid" jdbcType="VARCHAR"/>-->
+            <!--<result column="valid" property="valid" jdbcType="BIT"/>-->
+        <!--</collection>-->
+    <!--</resultMap>-->
+
+    <sql id="Example_Where_Clause">
+        <where>
+            <foreach collection="oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" suffix=")" prefixOverrides="and">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach collection="criterion.value" item="listItem" open="(" close=")"
+                                             separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Update_By_Example_Where_Clause">
+        <where>
+            <foreach collection="example.oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" suffix=")" prefixOverrides="and">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach collection="criterion.value" item="listItem" open="(" close=")"
+                                             separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Base_Column_List">
+    id, userid, user_name, password, birthday, registerdate, location, company, email, 
+    phone, telnum, avatar, association, deptpk, deptname, user_code, ts, dr, postpk, 
+    postname, rankpk, rankname, deptcode
+  </sql>
+    <sql id="Blob_Column_List">
+    description
+  </sql>
+    <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.ybz.entity.UserExample">
+        select
+        <if test="distinct">
+            distinct
+        </if>
+        <include refid="Base_Column_List"/>
+        ,
+        <include refid="Blob_Column_List"/>
+        from user_t
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+        <if test="orderByClause != null">
+            order by ${orderByClause}
+        </if>
+    </select>
+    <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.ybz.entity.UserExample">
+        select
+        <if test="distinct">
+            distinct
+        </if>
+        <include refid="Base_Column_List"/>
+        from user_t
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+        <if test="orderByClause != null">
+            order by ${orderByClause}
+        </if>
+    </select>
+    <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        ,
+        <include refid="Blob_Column_List"/>
+        from user_t
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from user_t
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+    <delete id="deleteByExample" parameterType="com.ybz.entity.UserExample">
+        delete from user_t
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+    </delete>
+    <insert id="insert" parameterType="com.ybz.entity.User">
+    insert into user_t (id, userid, user_name, 
+      password, birthday, registerdate, 
+      location, company, email, 
+      phone, telnum, avatar, 
+      association, deptpk, deptname, 
+      user_code, ts, dr, postpk, 
+      postname, rankpk, rankname, 
+      deptcode, description)
+    values (#{id,jdbcType=INTEGER}, #{userid,jdbcType=VARCHAR}, #{userName,jdbcType=VARCHAR}, 
+      #{password,jdbcType=VARCHAR}, #{birthday,jdbcType=DATE}, #{registerdate,jdbcType=TIMESTAMP}, 
+      #{location,jdbcType=VARCHAR}, #{company,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, 
+      #{phone,jdbcType=VARCHAR}, #{telnum,jdbcType=VARCHAR}, #{avatar,jdbcType=VARCHAR}, 
+      #{association,jdbcType=VARCHAR}, #{deptpk,jdbcType=VARCHAR}, #{deptname,jdbcType=VARCHAR}, 
+      #{userCode,jdbcType=VARCHAR}, #{ts,jdbcType=TIMESTAMP}, #{dr,jdbcType=BIT}, #{postpk,jdbcType=VARCHAR}, 
+      #{postname,jdbcType=VARCHAR}, #{rankpk,jdbcType=VARCHAR}, #{rankname,jdbcType=VARCHAR}, 
+      #{deptcode,jdbcType=VARCHAR}, #{description,jdbcType=LONGVARCHAR})
+  </insert>
+    <insert id="insertSelective" parameterType="com.ybz.entity.User">
+        insert into user_t
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="userid != null">
+                userid,
+            </if>
+            <if test="userName != null">
+                user_name,
+            </if>
+            <if test="password != null">
+                password,
+            </if>
+            <if test="birthday != null">
+                birthday,
+            </if>
+            <if test="registerdate != null">
+                registerdate,
+            </if>
+            <if test="location != null">
+                location,
+            </if>
+            <if test="company != null">
+                company,
+            </if>
+            <if test="email != null">
+                email,
+            </if>
+            <if test="phone != null">
+                phone,
+            </if>
+            <if test="telnum != null">
+                telnum,
+            </if>
+            <if test="avatar != null">
+                avatar,
+            </if>
+            <if test="association != null">
+                association,
+            </if>
+            <if test="deptpk != null">
+                deptpk,
+            </if>
+            <if test="deptname != null">
+                deptname,
+            </if>
+            <if test="userCode != null">
+                user_code,
+            </if>
+            <if test="ts != null">
+                ts,
+            </if>
+            <if test="dr != null">
+                dr,
+            </if>
+            <if test="postpk != null">
+                postpk,
+            </if>
+            <if test="postname != null">
+                postname,
+            </if>
+            <if test="rankpk != null">
+                rankpk,
+            </if>
+            <if test="rankname != null">
+                rankname,
+            </if>
+            <if test="deptcode != null">
+                deptcode,
+            </if>
+            <if test="description != null">
+                description,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="userid != null">
+                #{userid,jdbcType=VARCHAR},
+            </if>
+            <if test="userName != null">
+                #{userName,jdbcType=VARCHAR},
+            </if>
+            <if test="password != null">
+                #{password,jdbcType=VARCHAR},
+            </if>
+            <if test="birthday != null">
+                #{birthday,jdbcType=DATE},
+            </if>
+            <if test="registerdate != null">
+                #{registerdate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="location != null">
+                #{location,jdbcType=VARCHAR},
+            </if>
+            <if test="company != null">
+                #{company,jdbcType=VARCHAR},
+            </if>
+            <if test="email != null">
+                #{email,jdbcType=VARCHAR},
+            </if>
+            <if test="phone != null">
+                #{phone,jdbcType=VARCHAR},
+            </if>
+            <if test="telnum != null">
+                #{telnum,jdbcType=VARCHAR},
+            </if>
+            <if test="avatar != null">
+                #{avatar,jdbcType=VARCHAR},
+            </if>
+            <if test="association != null">
+                #{association,jdbcType=VARCHAR},
+            </if>
+            <if test="deptpk != null">
+                #{deptpk,jdbcType=VARCHAR},
+            </if>
+            <if test="deptname != null">
+                #{deptname,jdbcType=VARCHAR},
+            </if>
+            <if test="userCode != null">
+                #{userCode,jdbcType=VARCHAR},
+            </if>
+            <if test="ts != null">
+                #{ts,jdbcType=TIMESTAMP},
+            </if>
+            <if test="dr != null">
+                #{dr,jdbcType=BIT},
+            </if>
+            <if test="postpk != null">
+                #{postpk,jdbcType=VARCHAR},
+            </if>
+            <if test="postname != null">
+                #{postname,jdbcType=VARCHAR},
+            </if>
+            <if test="rankpk != null">
+                #{rankpk,jdbcType=VARCHAR},
+            </if>
+            <if test="rankname != null">
+                #{rankname,jdbcType=VARCHAR},
+            </if>
+            <if test="deptcode != null">
+                #{deptcode,jdbcType=VARCHAR},
+            </if>
+            <if test="description != null">
+                #{description,jdbcType=LONGVARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <select id="countByExample" parameterType="com.ybz.entity.UserExample" resultType="java.lang.Integer">
+        select count(*) from user_t
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+    </select>
+    <update id="updateByExampleSelective" parameterType="map">
+        update user_t
+        <set>
+            <if test="record.id != null">
+                id = #{record.id,jdbcType=INTEGER},
+            </if>
+            <if test="record.userid != null">
+                userid = #{record.userid,jdbcType=VARCHAR},
+            </if>
+            <if test="record.userName != null">
+                user_name = #{record.userName,jdbcType=VARCHAR},
+            </if>
+            <if test="record.password != null">
+                password = #{record.password,jdbcType=VARCHAR},
+            </if>
+            <if test="record.birthday != null">
+                birthday = #{record.birthday,jdbcType=DATE},
+            </if>
+            <if test="record.registerdate != null">
+                registerdate = #{record.registerdate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="record.location != null">
+                location = #{record.location,jdbcType=VARCHAR},
+            </if>
+            <if test="record.company != null">
+                company = #{record.company,jdbcType=VARCHAR},
+            </if>
+            <if test="record.email != null">
+                email = #{record.email,jdbcType=VARCHAR},
+            </if>
+            <if test="record.phone != null">
+                phone = #{record.phone,jdbcType=VARCHAR},
+            </if>
+            <if test="record.telnum != null">
+                telnum = #{record.telnum,jdbcType=VARCHAR},
+            </if>
+            <if test="record.avatar != null">
+                avatar = #{record.avatar,jdbcType=VARCHAR},
+            </if>
+            <if test="record.association != null">
+                association = #{record.association,jdbcType=VARCHAR},
+            </if>
+            <if test="record.deptpk != null">
+                deptpk = #{record.deptpk,jdbcType=VARCHAR},
+            </if>
+            <if test="record.deptname != null">
+                deptname = #{record.deptname,jdbcType=VARCHAR},
+            </if>
+            <if test="record.userCode != null">
+                user_code = #{record.userCode,jdbcType=VARCHAR},
+            </if>
+            <if test="record.ts != null">
+                ts = #{record.ts,jdbcType=TIMESTAMP},
+            </if>
+            <if test="record.dr != null">
+                dr = #{record.dr,jdbcType=BIT},
+            </if>
+            <if test="record.postpk != null">
+                postpk = #{record.postpk,jdbcType=VARCHAR},
+            </if>
+            <if test="record.postname != null">
+                postname = #{record.postname,jdbcType=VARCHAR},
+            </if>
+            <if test="record.rankpk != null">
+                rankpk = #{record.rankpk,jdbcType=VARCHAR},
+            </if>
+            <if test="record.rankname != null">
+                rankname = #{record.rankname,jdbcType=VARCHAR},
+            </if>
+            <if test="record.deptcode != null">
+                deptcode = #{record.deptcode,jdbcType=VARCHAR},
+            </if>
+            <if test="record.description != null">
+                description = #{record.description,jdbcType=LONGVARCHAR},
+            </if>
+        </set>
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause"/>
+        </if>
+    </update>
+    <update id="updateByExampleWithBLOBs" parameterType="map">
+        update user_t
+        set id = #{record.id,jdbcType=INTEGER},
+        userid = #{record.userid,jdbcType=VARCHAR},
+        user_name = #{record.userName,jdbcType=VARCHAR},
+        password = #{record.password,jdbcType=VARCHAR},
+        birthday = #{record.birthday,jdbcType=DATE},
+        registerdate = #{record.registerdate,jdbcType=TIMESTAMP},
+        location = #{record.location,jdbcType=VARCHAR},
+        company = #{record.company,jdbcType=VARCHAR},
+        email = #{record.email,jdbcType=VARCHAR},
+        phone = #{record.phone,jdbcType=VARCHAR},
+        telnum = #{record.telnum,jdbcType=VARCHAR},
+        avatar = #{record.avatar,jdbcType=VARCHAR},
+        association = #{record.association,jdbcType=VARCHAR},
+        deptpk = #{record.deptpk,jdbcType=VARCHAR},
+        deptname = #{record.deptname,jdbcType=VARCHAR},
+        user_code = #{record.userCode,jdbcType=VARCHAR},
+        ts = #{record.ts,jdbcType=TIMESTAMP},
+        dr = #{record.dr,jdbcType=BIT},
+        postpk = #{record.postpk,jdbcType=VARCHAR},
+        postname = #{record.postname,jdbcType=VARCHAR},
+        rankpk = #{record.rankpk,jdbcType=VARCHAR},
+        rankname = #{record.rankname,jdbcType=VARCHAR},
+        deptcode = #{record.deptcode,jdbcType=VARCHAR},
+        description = #{record.description,jdbcType=LONGVARCHAR}
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause"/>
+        </if>
+    </update>
+    <update id="updateByExample" parameterType="map">
+        update user_t
+        set id = #{record.id,jdbcType=INTEGER},
+        userid = #{record.userid,jdbcType=VARCHAR},
+        user_name = #{record.userName,jdbcType=VARCHAR},
+        password = #{record.password,jdbcType=VARCHAR},
+        birthday = #{record.birthday,jdbcType=DATE},
+        registerdate = #{record.registerdate,jdbcType=TIMESTAMP},
+        location = #{record.location,jdbcType=VARCHAR},
+        company = #{record.company,jdbcType=VARCHAR},
+        email = #{record.email,jdbcType=VARCHAR},
+        phone = #{record.phone,jdbcType=VARCHAR},
+        telnum = #{record.telnum,jdbcType=VARCHAR},
+        avatar = #{record.avatar,jdbcType=VARCHAR},
+        association = #{record.association,jdbcType=VARCHAR},
+        deptpk = #{record.deptpk,jdbcType=VARCHAR},
+        deptname = #{record.deptname,jdbcType=VARCHAR},
+        user_code = #{record.userCode,jdbcType=VARCHAR},
+        ts = #{record.ts,jdbcType=TIMESTAMP},
+        dr = #{record.dr,jdbcType=BIT},
+        postpk = #{record.postpk,jdbcType=VARCHAR},
+        postname = #{record.postname,jdbcType=VARCHAR},
+        rankpk = #{record.rankpk,jdbcType=VARCHAR},
+        rankname = #{record.rankname,jdbcType=VARCHAR},
+        deptcode = #{record.deptcode,jdbcType=VARCHAR}
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause"/>
+        </if>
+    </update>
+    <update id="updateByPrimaryKeySelective" parameterType="com.ybz.entity.User">
+        update user_t
+        <set>
+            <if test="userid != null">
+                userid = #{userid,jdbcType=VARCHAR},
+            </if>
+            <if test="userName != null">
+                user_name = #{userName,jdbcType=VARCHAR},
+            </if>
+            <if test="password != null">
+                password = #{password,jdbcType=VARCHAR},
+            </if>
+            <if test="birthday != null">
+                birthday = #{birthday,jdbcType=DATE},
+            </if>
+            <if test="registerdate != null">
+                registerdate = #{registerdate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="location != null">
+                location = #{location,jdbcType=VARCHAR},
+            </if>
+            <if test="company != null">
+                company = #{company,jdbcType=VARCHAR},
+            </if>
+            <if test="email != null">
+                email = #{email,jdbcType=VARCHAR},
+            </if>
+            <if test="phone != null">
+                phone = #{phone,jdbcType=VARCHAR},
+            </if>
+            <if test="telnum != null">
+                telnum = #{telnum,jdbcType=VARCHAR},
+            </if>
+            <if test="avatar != null">
+                avatar = #{avatar,jdbcType=VARCHAR},
+            </if>
+            <if test="association != null">
+                association = #{association,jdbcType=VARCHAR},
+            </if>
+            <if test="deptpk != null">
+                deptpk = #{deptpk,jdbcType=VARCHAR},
+            </if>
+            <if test="deptname != null">
+                deptname = #{deptname,jdbcType=VARCHAR},
+            </if>
+            <if test="userCode != null">
+                user_code = #{userCode,jdbcType=VARCHAR},
+            </if>
+            <if test="ts != null">
+                ts = #{ts,jdbcType=TIMESTAMP},
+            </if>
+            <if test="dr != null">
+                dr = #{dr,jdbcType=BIT},
+            </if>
+            <if test="postpk != null">
+                postpk = #{postpk,jdbcType=VARCHAR},
+            </if>
+            <if test="postname != null">
+                postname = #{postname,jdbcType=VARCHAR},
+            </if>
+            <if test="rankpk != null">
+                rankpk = #{rankpk,jdbcType=VARCHAR},
+            </if>
+            <if test="rankname != null">
+                rankname = #{rankname,jdbcType=VARCHAR},
+            </if>
+            <if test="deptcode != null">
+                deptcode = #{deptcode,jdbcType=VARCHAR},
+            </if>
+            <if test="description != null">
+                description = #{description,jdbcType=LONGVARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.ybz.entity.User">
+    update user_t
+    set userid = #{userid,jdbcType=VARCHAR},
+      user_name = #{userName,jdbcType=VARCHAR},
+      password = #{password,jdbcType=VARCHAR},
+      birthday = #{birthday,jdbcType=DATE},
+      registerdate = #{registerdate,jdbcType=TIMESTAMP},
+      location = #{location,jdbcType=VARCHAR},
+      company = #{company,jdbcType=VARCHAR},
+      email = #{email,jdbcType=VARCHAR},
+      phone = #{phone,jdbcType=VARCHAR},
+      telnum = #{telnum,jdbcType=VARCHAR},
+      avatar = #{avatar,jdbcType=VARCHAR},
+      association = #{association,jdbcType=VARCHAR},
+      deptpk = #{deptpk,jdbcType=VARCHAR},
+      deptname = #{deptname,jdbcType=VARCHAR},
+      user_code = #{userCode,jdbcType=VARCHAR},
+      ts = #{ts,jdbcType=TIMESTAMP},
+      dr = #{dr,jdbcType=BIT},
+      postpk = #{postpk,jdbcType=VARCHAR},
+      postname = #{postname,jdbcType=VARCHAR},
+      rankpk = #{rankpk,jdbcType=VARCHAR},
+      rankname = #{rankname,jdbcType=VARCHAR},
+      deptcode = #{deptcode,jdbcType=VARCHAR},
+      description = #{description,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+    <update id="updateByPrimaryKey" parameterType="com.ybz.entity.User">
+    update user_t
+    set userid = #{userid,jdbcType=VARCHAR},
+      user_name = #{userName,jdbcType=VARCHAR},
+      password = #{password,jdbcType=VARCHAR},
+      birthday = #{birthday,jdbcType=DATE},
+      registerdate = #{registerdate,jdbcType=TIMESTAMP},
+      location = #{location,jdbcType=VARCHAR},
+      company = #{company,jdbcType=VARCHAR},
+      email = #{email,jdbcType=VARCHAR},
+      phone = #{phone,jdbcType=VARCHAR},
+      telnum = #{telnum,jdbcType=VARCHAR},
+      avatar = #{avatar,jdbcType=VARCHAR},
+      association = #{association,jdbcType=VARCHAR},
+      deptpk = #{deptpk,jdbcType=VARCHAR},
+      deptname = #{deptname,jdbcType=VARCHAR},
+      user_code = #{userCode,jdbcType=VARCHAR},
+      ts = #{ts,jdbcType=TIMESTAMP},
+      dr = #{dr,jdbcType=BIT},
+      postpk = #{postpk,jdbcType=VARCHAR},
+      postname = #{postname,jdbcType=VARCHAR},
+      rankpk = #{rankpk,jdbcType=VARCHAR},
+      rankname = #{rankname,jdbcType=VARCHAR},
+      deptcode = #{deptcode,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+    <!--查询有效人员接口-->
+    <select id="queryUserListByValid" resultMap="BaseResultMap" parameterType="com.ybz.entity.UserExample">
+        select
+        <if test="distinct">
+            distinct
+        </if>
+        user_name,password,email,phone,deptname,company,ts FROM user_t
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+        <if test="orderByClause != null">
+            order by ${orderByClause}
+        </if>
+        <if test="startRow != null and pageSize != null and pageSize != 0">
+            limit #{startRow},#{pageSize}
+        </if>
+    </select>
+
+    <select id="countByValid" resultType="java.lang.Integer" parameterType="com.ybz.entity.UserExample">
+      SELECT COUNT(*) FROM user_t
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+    </select>
+</mapper>
